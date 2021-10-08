@@ -1,16 +1,25 @@
 import java.util.Scanner;
 
 
-class VaccineCentres {
+class Hospitals {
     
+    
+    void registration(String name, int pincode) {
+
+    }
 }
 
-class Citizens {
+class Citizen {
+
+    void registration(String name, int age, int id) {
+
+    }
+
 
 }
 
 class Slot {
-
+    
 }
 
 public class akshat {
