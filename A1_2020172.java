@@ -14,17 +14,21 @@ class Citizen {
     void registration(String name, int age, int id) {
 
     }
+}
 
+class Vaccine {
 
+    void addition(String name, int noOfDoses, int gap) {
+
+    }
 }
 
 class Slot {
     
 }
 
-public class akshat {
-    public static void main(String[] args) {
-        System.out.println("CoWin Portal initialized....");
+public class A1_2020172 {
+    public static void menu() {
         System.out.println("---------------------------------");
         System.out.println("1. Add Vaccine");
         System.out.println("2. Register Hospital");
@@ -35,6 +39,11 @@ public class akshat {
         System.out.println("7. Check Vaccination Status");
         System.out.println("8. Exit");
         System.out.println("---------------------------------");
+    }
+
+    public static void main(String[] args) {
+        System.out.println("CoWin Portal initialized....");
+        menu();
         Scanner in = new Scanner(System.in);
         while (in.hasNext()) {
             int queryNo = Integer.parseInt(in.nextLine());
