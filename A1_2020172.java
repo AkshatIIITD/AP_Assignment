@@ -62,11 +62,13 @@ public class A1_2020172 {
         Hospitals hospitals = new Hospitals();
         Citizen citizen = new Citizen();
         Scanner in = new Scanner(System.in);
+        
         int queryNo = Integer.parseInt(in.nextLine());
         while (queryNo != 8) {
+
             if (queryNo == 1) {
                 System.out.print("Vaccine Name: ");
-                String name = in.nextLine();
+                String vaccineName = in.nextLine();
                 System.out.print("Number of Doses: ");
                 int noOfDoses = Integer.parseInt(in.nextLine());
                 int gap = 0;
@@ -74,42 +76,96 @@ public class A1_2020172 {
                     System.out.print("Gap Between Doses: ");
                     gap = Integer.parseInt(in.nextLine());
                 }
-                vaccines.addition(name, noOfDoses, gap);
+                vaccines.addition(vaccineName, noOfDoses, gap);
 
             } else if (queryNo == 2) {
                 System.out.print("Hospital Name: ");
-                String name = in.nextLine();
+                String hospitalName = in.nextLine();
                 System.out.print("PinCode: ");
                 int pincode = Integer.parseInt(in.nextLine());
-                hospitals.registration(name, pincode);
+                hospitals.registration(hospitalName, pincode);
 
             } else if (queryNo == 3) {
                 System.out.print("Citizen Name: ");
-                String name = in.nextLine();
+                String citizenName = in.nextLine();
                 System.out.print("Age: ");
                 int age = Integer.parseInt(in.nextLine());
                 System.out.print("Unique ID: ");
-                int id = Integer.parseInt(in.nextLine());
-                citizen.registration(name, age, id);
+                int citizenID = Integer.parseInt(in.nextLine());
+                if (age < 19) {
+                    System.out.println("Only above 18 are allowed");
+                } else {
+                    citizen.registration(citizenName, age, citizenID);
+                }
 
             } else if (queryNo == 4) {
-
+                System.out.println("Enter Hospital ID: ");
+                int hospitalID = Integer.parseInt(in.nextLine());
+                System.out.print("Enter number of Slots to be added: ");
+                int noOfSlots = Integer.parseInt(in.nextLine());
+                System.out.print("Enter Day Number: ");
+                int dayNum = Integer.parseInt(in.nextLine());
+                System.out.print("Enter Quantity: ");
+                int quantity = Integer.parseInt(in.nextLine());
+                
 
             } else if (queryNo == 5) {
+                System.out.print("Enter patient Unique ID: ");
+                int uniqueID = Integer.parseInt(in.nextLine());
+                System.out.println("1. Search by area");
+                System.out.println("2. Search by Vaccine");
+                System.out.println("3. Exit");
+                System.out.print("Enter option: ");
+                int option = Integer.parseInt(in.nextLine());
+                
+                if (option == 1) {
+                    System.out.print("Enter PinCode: ");
+                    int areaID = Integer.parseInt(in.nextLine());
+                    //list hospitalIDs and hospitals here. 
+                    System.out.println("Enter Hospital ID: ");
+                    int hospitalID = Integer.parseInt(in.nextLine());
+                    //
+                    //
+                    System.out.print("Choose Slot: ");
+                    int slotNo = Integer.parseInt(in.nextLine());
+                    //
+                    System.out.println(" vaccinated with ");
 
+                } else if (option == 2) {
+                    System.out.print("Enter Vaccine Name");
+                    String vaccineName = in.nextLine();
+                    //list hospitalIDs and hospitals here. 
+                    System.out.println("Enter Hospital ID: ");
+                    int hospitalID = Integer.parseInt(in.nextLine());
+                    //
+                    //
+                    System.out.print("Choose Slot: ");
+                    int slotNo = Integer.parseInt(in.nextLine());
+                    //
+                    System.out.println(" vaccinated with ");                    
+
+                } else if (option == 3) {
+                    continue;
+                } else {
+                    System.out.println("Wrong Option");
+                }
 
             } else if (queryNo == 6) {
-
+                System.out.println("Enter Hospital ID: ");
+                int hospitalID = Integer.parseInt(in.nextLine());
+                //list all slots
 
             } else if (queryNo == 7) {
-
-
-            } else if (queryNo == 8) {
-                break;
-            
+                System.out.print("Enter patient Unique ID: ");
+                int uniqueID = Integer.parseInt(in.nextLine());
+                //status
+                System.out.println("Vaccine Given: ");
+                System.out.println("Number of Doses given: ");
+                
             } else {
                 System.out.println("Incorrect menu option");
             }
+            menu();
             queryNo = Integer.parseInt(in.nextLine());
         }
         in.close();
