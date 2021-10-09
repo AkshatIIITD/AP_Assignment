@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
-class Hospitals {
+class AllHospitals {
     
 
 
@@ -10,22 +10,23 @@ class Hospitals {
     }
 }
 
-class Citizen {
-
-    void registration(String name, int age, int id) {
-
-    }
+class Hospital {
+    
 }
 
-class Vaccines {
-    ArrayList<String> vaccineNameList = new ArrayList<String>(); 
-    ArrayList<Integer> vaccineDosesList = new ArrayList<Integer>();
-    ArrayList<Integer> vaccineGapList = new ArrayList<Integer>();
+class Slot {
+    
+}
 
-    void addition(String name, int noOfDoses, int gap) {
-        vaccineNameList.add(name);
-        vaccineDosesList.add(noOfDoses);
-        vaccineGapList.add(gap);
+class Citizen {
+    String citizenName;
+    int age;
+    int uniqueID;
+    String vaccinationStatus = "REGISTERED";
+    Citizen(String citizenName, int age, int uniqueID) {
+        this.citizenName = citizenName;
+        this.age = age;
+        this.uniqueID = uniqueID;
     }
 }
 
@@ -34,11 +35,32 @@ class Vaccine{
     int noOfDoses;
     int gap;
 
-    
+    Vaccine(String name, int noOfDoses, int gap) {
+        this.name = name;
+        this.noOfDoses = noOfDoses;
+        this.gap = gap;
+    }
 }
 
-class Slot {
+class AllVaccines {
+    ArrayList<Vaccine> vaccineList = new ArrayList<Vaccine>(); 
+
+    void addition(String name, int noOfDoses, int gap) {        
+        vaccineList.add(new Vaccine(name, noOfDoses, gap));
+    }
+
+}
+
+class AllCitizens {
+    ArrayList<Citizen> citizenList = new ArrayList<Citizen>();
     
+    void registration(String citizenName, int age, int uniqueID) {
+        citizenList.add(new Citizen(citizenName, age, uniqueID));
+    }
+
+    void changeStatus() {
+
+    }
 }
 
 public class A1_2020172 {
@@ -58,9 +80,9 @@ public class A1_2020172 {
     public static void main(String[] args) {
         System.out.println("CoWin Portal initialized....");
         menu();
-        Vaccines vaccines = new Vaccines();
-        Hospitals hospitals = new Hospitals();
-        Citizen citizen = new Citizen();
+        AllVaccines vaccineList = new AllVaccines();
+        AllHospitals hospitalList = new AllHospitals();
+        AllCitizens citizenList = new AllCitizens();
         Scanner in = new Scanner(System.in);
         
         int queryNo = Integer.parseInt(in.nextLine());
@@ -76,14 +98,14 @@ public class A1_2020172 {
                     System.out.print("Gap Between Doses: ");
                     gap = Integer.parseInt(in.nextLine());
                 }
-                vaccines.addition(vaccineName, noOfDoses, gap);
+                vaccineList.addition(vaccineName, noOfDoses, gap);
 
             } else if (queryNo == 2) {
                 System.out.print("Hospital Name: ");
                 String hospitalName = in.nextLine();
                 System.out.print("PinCode: ");
                 int pincode = Integer.parseInt(in.nextLine());
-                hospitals.registration(hospitalName, pincode);
+                hospitalList.registration(hospitalName, pincode);
 
             } else if (queryNo == 3) {
                 System.out.print("Citizen Name: ");
@@ -95,7 +117,7 @@ public class A1_2020172 {
                 if (age < 19) {
                     System.out.println("Only above 18 are allowed");
                 } else {
-                    citizen.registration(citizenName, age, citizenID);
+                    citizenList.registration(citizenName, age, citizenID);
                 }
 
             } else if (queryNo == 4) {
@@ -161,7 +183,7 @@ public class A1_2020172 {
                 //status
                 System.out.println("Vaccine Given: ");
                 System.out.println("Number of Doses given: ");
-                
+
             } else {
                 System.out.println("Incorrect menu option");
             }
