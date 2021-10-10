@@ -298,13 +298,14 @@ public class A1_2020172 {
                     System.out.print("Enter Vaccine Name: ");
                     String vaccineName = in.nextLine();
                     hospitalList.listHospitalViaVaccineName(vaccineName);
-                    System.out.println("Enter Hospital ID: ");
+                    System.out.print("Enter Hospital ID: ");
                     String hospitalID = in.nextLine();
                     Vaccine[] returned = hospitalList.listSlotsfor5(hospitalID);
                     if(returned.length != 0) {
                         System.out.print("Choose Slot: ");
                         int slotNo = Integer.parseInt(in.nextLine());
                         int ind = citizenList.bookSlot(uniqueID, returned[slotNo]);
+                        // hospitalList.hospitalList.get(1).listOfSlots.get(slotNo).vaccineQuantity--;
                         System.out.println(citizenList.citizenList.get(ind).citizenName+" vaccinated with "+citizenList.citizenList.get(ind).givenVac.vaccineName);
                     }                 
 
