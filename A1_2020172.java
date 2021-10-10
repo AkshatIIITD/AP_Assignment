@@ -290,6 +290,17 @@ public class A1_2020172 {
                         System.out.print("Choose Slot: ");
                         int slotNo = Integer.parseInt(in.nextLine());
                         int ind = citizenList.bookSlot(uniqueID, returned[slotNo]);
+                        int i = 0;
+                        while(i < hospitalList.hospitalList.size()) {
+                            if (hospitalList.hospitalList.get(i).uniquehID.equals(hospitalID)) {
+                                break;
+                            }
+                        }
+                        Hospital temp = hospitalList.hospitalList.get(i);
+                        Slot temp1 = temp.listOfSlots.get(slotNo);
+                        temp1.vaccineQuantity--;
+                        temp.listOfSlots.set(slotNo, temp1);
+                        hospitalList.hospitalList.set(i, temp);
                         System.out.println(citizenList.citizenList.get(ind).citizenName+" vaccinated with "+citizenList.citizenList.get(ind).givenVac.vaccineName);
                     }
 
@@ -305,7 +316,17 @@ public class A1_2020172 {
                         System.out.print("Choose Slot: ");
                         int slotNo = Integer.parseInt(in.nextLine());
                         int ind = citizenList.bookSlot(uniqueID, returned[slotNo]);
-                        // hospitalList.hospitalList.get(1).listOfSlots.get(slotNo).vaccineQuantity--;
+                        int i = 0;
+                        while(i < hospitalList.hospitalList.size()) {
+                            if (hospitalList.hospitalList.get(i).uniquehID.equals(hospitalID)) {
+                                break;
+                            }
+                        }
+                        Hospital temp = hospitalList.hospitalList.get(i);
+                        Slot temp1 = temp.listOfSlots.get(slotNo);
+                        temp1.vaccineQuantity--;
+                        temp.listOfSlots.set(slotNo, temp1);
+                        hospitalList.hospitalList.set(i, temp);
                         System.out.println(citizenList.citizenList.get(ind).citizenName+" vaccinated with "+citizenList.citizenList.get(ind).givenVac.vaccineName);
                     }                 
 
