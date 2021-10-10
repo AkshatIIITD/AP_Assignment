@@ -41,11 +41,11 @@ class AllVaccines {
 
 class Citizen {
     String citizenName;
-    String nameOfVaccineGiven;
     Integer age;
     Long uniqueID;
     String vaccinationStatus;
     int noOfDosesGiven;
+    Vaccine givenVac;
 
     Citizen(String citizenName, Integer age, Long uniqueID) {
         this.citizenName = citizenName;
@@ -70,14 +70,15 @@ class AllCitizens {
         for (int i = 0; i < citizenList.size(); i++) {
             if (citizenID == citizenList.get(i).uniqueID) {
                 Citizen temp = citizenList.get(i);
-                temp.nameOfVaccineGiven = regVac.vaccineName;
+                temp.givenVac = regVac;
                 temp.vaccinationStatus = "PARTIALLY VACCINATED";
+                temp.noOfDosesGiven++;
                 if (regVac.noOfDoses == 1) {
                     temp.vaccinationStatus = "FULLY VACCINATED";
                 }
                 citizenList.set(i, temp);
                 name_vacName[0] = temp.citizenName;
-                name_vacName[1] = temp.nameOfVaccineGiven;
+                name_vacName[1] = temp.givenVac.vaccineName;
                 break;
             }
         }
@@ -137,7 +138,7 @@ class AllHospitals {
         }
     }
 
-    Vaccine[] listSlots(int hospitalID) {
+    Vaccine[] listSlotsfor5(int hospitalID) {
         Vaccine[] vaccinesReturned = new Vaccine[0];
         for (int i = 0; i < hospitalList.size(); i++) {
             if (hospitalList.get(i).uniquehID == hospitalID) {
@@ -152,6 +153,19 @@ class AllHospitals {
         }
         return vaccinesReturned;
     }
+
+    void listSlotsOnly(int hospitalID) {
+        for (int i = 0; i < hospitalList.size(); i++) {
+            if (hospitalList.get(i).uniquehID == hospitalID) {
+                ArrayList<Slot> temp = hospitalList.get(i).listOfSlots;
+                for (int j = 0; j < temp.size(); j++) {
+                    System.out.println("Day: "+temp.get(j).dayNum+", Vaccine: "+temp.get(j).vaccineOfSlot.vaccineName+", Available Qty: "+temp.get(j).vaccineQuantity);
+                }
+                break;
+            }
+        }
+    }
+
 }
 
 public class A1_2020172 {
@@ -253,7 +267,7 @@ public class A1_2020172 {
                     hospitalList.listHospitalsWithPinCode(areaID);
                     System.out.println("Enter Hospital ID: ");
                     int hospitalID = Integer.parseInt(in.nextLine());
-                    Vaccine[] returned = hospitalList.listSlots(hospitalID);
+                    Vaccine[] returned = hospitalList.listSlotsfor5(hospitalID);
                     System.out.print("Choose Slot: ");
                     int slotNo = Integer.parseInt(in.nextLine());
                     String[] name_vacName = citizenList.bookSlot(uniqueID, returned[slotNo]);
@@ -283,15 +297,33 @@ public class A1_2020172 {
 
                 System.out.println("Enter Hospital ID: ");
                 int hospitalID = Integer.parseInt(in.nextLine());
-                //list all slots
+                hospitalList.listSlotsOnly(hospitalID);
 
             } else if (queryNo == 7) {
 
                 System.out.print("Enter patient Unique ID: ");
-                int uniqueID = Integer.parseInt(in.nextLine());
-                //status
-                System.out.println("Vaccine Given: ");
-                System.out.println("Number of Doses given: ");
+                Long uniqueID = Long.parseLong(in.nextLine());
+                Citizen temp;
+                String vacName = "a";
+                String status = "a";
+                Integer dosesNo = 0;
+                Integer duedate = 0;
+                for (int i = 0; i < citizenList.citizenList.size(); i++) {
+                    if (citizenList.citizenList.get(i).uniqueID == uniqueID) {
+                        temp = citizenList.citizenList.get(i);
+                        vacName = temp.givenVac.vaccineName;
+                        status = temp.vaccinationStatus;
+                        dosesNo = temp.noOfDosesGiven;
+                        duedate = temp.givenVac.gap+1;
+                        break;
+                    }
+                }
+                System.out.println(status);
+                System.out.println("Vaccine Given: "+vacName);
+                System.out.println("Number of Doses given: "+dosesNo);
+                if (!status.equals("FULLY VACCINATED")) {
+                    System.out.println("Next Dose due date: "+duedate);
+                }
 
             } else {
                 System.out.println("Incorrect menu option");
