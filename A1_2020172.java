@@ -328,7 +328,9 @@ public class A1_2020172 {
                         temp.listOfSlots.set(slotNo, temp1);
                         hospitalList.hospitalList.set(i, temp);
                         System.out.println(citizenList.citizenList.get(ind).citizenName+" vaccinated with "+citizenList.citizenList.get(ind).givenVac.vaccineName);
-                    }                 
+                    } else {
+                        System.out.println("No slots available");
+                    }           
 
                 } else if (option == 3) {
 
