@@ -1,61 +1,57 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Random;
 
-class AllHospitals {
-    
-
-
-    void registration(String name, int pincode) {
-
-    }
-}
-
-class Hospital {
-    
-}
 
 class Slot {
     
 }
 
-class Citizen {
-    String citizenName;
-    int age;
-    int uniqueID;
-    String vaccinationStatus = "REGISTERED";
-    Citizen(String citizenName, int age, int uniqueID) {
-        this.citizenName = citizenName;
-        this.age = age;
-        this.uniqueID = uniqueID;
-    }
-}
-
-class Vaccine{
-    String name;
-    int noOfDoses;
-    int gap;
-
-    Vaccine(String name, int noOfDoses, int gap) {
-        this.name = name;
-        this.noOfDoses = noOfDoses;
-        this.gap = gap;
-    }
-}
-
 class AllVaccines {
+
+    class Vaccine{
+        String vaccineName;
+        int noOfDoses;
+        int gap;
+    
+        Vaccine(String vaccineName, int noOfDoses, int gap) {
+            this.vaccineName = vaccineName;
+            this.noOfDoses = noOfDoses;
+            this.gap = gap;
+        }
+    }
+
     ArrayList<Vaccine> vaccineList = new ArrayList<Vaccine>(); 
 
-    void addition(String name, int noOfDoses, int gap) {        
-        vaccineList.add(new Vaccine(name, noOfDoses, gap));
+    void addition(String vaccineName, int noOfDoses, int gap) {        
+        vaccineList.add(new Vaccine(vaccineName, noOfDoses, gap));
+        System.out.println("Vaccine Name: "+vaccineName +", Number of Doses: "+noOfDoses+", Gap Between Doses: "+gap);
     }
 
 }
 
 class AllCitizens {
+
+    class Citizen {
+        String citizenName;
+        Integer age;
+        Long uniqueID;
+        String vaccinationStatus;
+
+        Citizen(String citizenName, Integer age, Long uniqueID) {
+            this.citizenName = citizenName;
+            this.age = age;
+            this.uniqueID = uniqueID;
+        }
+    }
+
     ArrayList<Citizen> citizenList = new ArrayList<Citizen>();
     
-    void registration(String citizenName, int age, int uniqueID) {
-        citizenList.add(new Citizen(citizenName, age, uniqueID));
+    void registration(String citizenName, int age, Long uniqueID) {
+        Citizen toBeAdded = new Citizen(citizenName, age, uniqueID);
+        toBeAdded.vaccinationStatus  = "REGISTERED";
+        citizenList.add(toBeAdded);
+        System.out.println("Citizen Name: "+citizenName+", Age: "+age+", Unique ID: "+uniqueID);
     }
 
     void changeStatus() {
@@ -63,7 +59,34 @@ class AllCitizens {
     }
 }
 
+
+class AllHospitals {
+    
+    class Hospital {
+        String hospitalName;
+        int pincode;
+        int uniquehID;
+    
+        Hospital(String hospitalName, int pincode) {
+            Random random = new Random();
+            this.hospitalName = hospitalName;
+            this.pincode = pincode;
+            this.uniquehID = random.nextInt(1000000);
+        }
+    }
+
+    ArrayList<Hospital> hospitalList = new ArrayList<Hospital>();
+
+    void registration(String hospitalName, int pincode) {
+        Hospital toBeAdded = new Hospital(hospitalName, pincode);
+        hospitalList.add(toBeAdded);
+        System.out.println("Hospital Name: "+hospitalName+", PinCode: "+pincode+", UniqueID: "+toBeAdded.uniquehID);
+    }
+
+}
+
 public class A1_2020172 {
+    
     public static void menu() {
         System.out.println("---------------------------------");
         System.out.println("1. Add Vaccine");
@@ -99,6 +122,7 @@ public class A1_2020172 {
                     gap = Integer.parseInt(in.nextLine());
                 }
                 vaccineList.addition(vaccineName, noOfDoses, gap);
+                
 
             } else if (queryNo == 2) {
                 System.out.print("Hospital Name: ");
@@ -113,7 +137,7 @@ public class A1_2020172 {
                 System.out.print("Age: ");
                 int age = Integer.parseInt(in.nextLine());
                 System.out.print("Unique ID: ");
-                int citizenID = Integer.parseInt(in.nextLine());
+                Long citizenID = Long.parseLong(in.nextLine());
                 if (age < 19) {
                     System.out.println("Only above 18 are allowed");
                 } else {
