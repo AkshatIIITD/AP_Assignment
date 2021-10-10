@@ -52,6 +52,7 @@ class Citizen {
         this.age = age;
         this.uniqueID = uniqueID;
     }
+
 }
 
 class AllCitizens {
@@ -60,23 +61,23 @@ class AllCitizens {
     
     void registration(String citizenName, int age, Long uniqueID) {
         Citizen toBeAdded = new Citizen(citizenName, age, uniqueID);
-        toBeAdded.vaccinationStatus  = "REGISTERED";
+        toBeAdded.vaccinationStatus = "REGISTERED";
         citizenList.add(toBeAdded);
         System.out.println("Citizen Name: "+citizenName+", Age: "+age+", Unique ID: "+uniqueID);
     }
-
+    
     int bookSlot(Long citizenID, Vaccine regVac) {
         int temp_index = 0;
         for (int i = 0; i < citizenList.size(); i++) {
-            if (citizenID == citizenList.get(i).uniqueID) {
-                Citizen temp = citizenList.get(i);
-                temp.givenVac = regVac;
-                temp.vaccinationStatus = "PARTIALLY VACCINATED";
-                temp.noOfDosesGiven++;
+            if (citizenID.equals(citizenList.get(i).uniqueID)) {
+                Citizen tempCitizen = citizenList.get(i);
+                tempCitizen.givenVac = regVac;
+                tempCitizen.vaccinationStatus = "PARTIALLY VACCINATED";
+                tempCitizen.noOfDosesGiven++;
                 if (regVac.noOfDoses == 1) {
-                    temp.vaccinationStatus = "FULLY VACCINATED";
+                    tempCitizen.vaccinationStatus = "FULLY VACCINATED";
                 }
-                citizenList.set(i, temp);
+                citizenList.set(i, tempCitizen);
                 temp_index = i;
                 break;
             }
@@ -307,7 +308,7 @@ public class A1_2020172 {
                     }                 
 
                 } else if (option == 3) {
-                    continue;
+                    
                 } else {
                     System.out.println("Wrong Option, exiting");
                 }
