@@ -65,8 +65,8 @@ class AllCitizens {
         System.out.println("Citizen Name: "+citizenName+", Age: "+age+", Unique ID: "+uniqueID);
     }
 
-    String[] bookSlot(Long citizenID, Vaccine regVac) {
-        String[] name_vacName = new String[2];
+    int bookSlot(Long citizenID, Vaccine regVac) {
+        int temp_index = 0;
         for (int i = 0; i < citizenList.size(); i++) {
             if (citizenID == citizenList.get(i).uniqueID) {
                 Citizen temp = citizenList.get(i);
@@ -77,12 +77,11 @@ class AllCitizens {
                     temp.vaccinationStatus = "FULLY VACCINATED";
                 }
                 citizenList.set(i, temp);
-                name_vacName[0] = temp.citizenName;
-                name_vacName[1] = temp.givenVac.vaccineName;
+                temp_index = i;
                 break;
             }
         }
-        return name_vacName;
+        return temp_index;
     }
 }
 
@@ -282,19 +281,19 @@ public class A1_2020172 {
                     System.out.print("Enter PinCode: ");
                     int areaID = Integer.parseInt(in.nextLine());
                     hospitalList.listHospitalsWithPinCode(areaID);
-                    System.out.println("Enter Hospital ID: ");
+                    System.out.print("Enter Hospital ID: ");
                     int hospitalID = Integer.parseInt(in.nextLine());
                     Vaccine[] returned = hospitalList.listSlotsfor5(hospitalID);
                     if(returned.length != 0) {
                         System.out.print("Choose Slot: ");
                         int slotNo = Integer.parseInt(in.nextLine());
-                        String[] name_vacName = citizenList.bookSlot(uniqueID, returned[slotNo]);
-                        System.out.println(name_vacName[0]+" vaccinated with "+name_vacName[1]);
+                        int ind = citizenList.bookSlot(uniqueID, returned[slotNo]);
+                        System.out.println(citizenList.citizenList.get(ind).citizenName+" vaccinated with "+citizenList.citizenList.get(ind).givenVac.vaccineName);
                     }
 
                 } else if (option == 2) {
 
-                    System.out.print("Enter Vaccine Name");
+                    System.out.print("Enter Vaccine Name: ");
                     String vaccineName = in.nextLine();
                     hospitalList.listHospitalViaVaccineName(vaccineName);
                     System.out.println("Enter Hospital ID: ");
@@ -303,8 +302,8 @@ public class A1_2020172 {
                     if(returned.length != 0) {
                         System.out.print("Choose Slot: ");
                         int slotNo = Integer.parseInt(in.nextLine());
-                        String[] name_vacName = citizenList.bookSlot(uniqueID, returned[slotNo]);
-                        System.out.println(name_vacName[0]+" vaccinated with "+name_vacName[1]);
+                        int ind = citizenList.bookSlot(uniqueID, returned[slotNo]);
+                        System.out.println(citizenList.citizenList.get(ind).citizenName+" vaccinated with "+citizenList.citizenList.get(ind).givenVac.vaccineName);
                     }                 
 
                 } else if (option == 3) {
@@ -315,7 +314,7 @@ public class A1_2020172 {
 
             } else if (queryNo == 6) {
 
-                System.out.println("Enter Hospital ID: ");
+                System.out.print("Enter Hospital ID: ");
                 int hospitalID = Integer.parseInt(in.nextLine());
                 hospitalList.listSlotsOnly(hospitalID);
 
