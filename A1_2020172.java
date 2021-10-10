@@ -4,22 +4,31 @@ import java.util.Random;
 
 
 class Slot {
-    
+    Vaccine vaccineOfSlot;
+    int dayNum;
+    int vaccineQuantity;
+
+    Slot(Vaccine vaccineOfSlot, int dayNum, int vaccineQuantity) {
+        this.vaccineOfSlot = vaccineOfSlot;
+        this.dayNum = dayNum;
+        this.vaccineQuantity = vaccineQuantity;
+    }
+
+}
+
+class Vaccine{
+    String vaccineName;
+    int noOfDoses;
+    int gap;
+
+    Vaccine(String vaccineName, int noOfDoses, int gap) {
+        this.vaccineName = vaccineName;
+        this.noOfDoses = noOfDoses;
+        this.gap = gap;
+    }
 }
 
 class AllVaccines {
-
-    class Vaccine{
-        String vaccineName;
-        int noOfDoses;
-        int gap;
-    
-        Vaccine(String vaccineName, int noOfDoses, int gap) {
-            this.vaccineName = vaccineName;
-            this.noOfDoses = noOfDoses;
-            this.gap = gap;
-        }
-    }
 
     ArrayList<Vaccine> vaccineList = new ArrayList<Vaccine>(); 
 
@@ -30,20 +39,21 @@ class AllVaccines {
 
 }
 
-class AllCitizens {
+class Citizen {
+    String citizenName;
+    String nameOfVaccineGiven;
+    Integer age;
+    Long uniqueID;
+    String vaccinationStatus;
 
-    class Citizen {
-        String citizenName;
-        Integer age;
-        Long uniqueID;
-        String vaccinationStatus;
-
-        Citizen(String citizenName, Integer age, Long uniqueID) {
-            this.citizenName = citizenName;
-            this.age = age;
-            this.uniqueID = uniqueID;
-        }
+    Citizen(String citizenName, Integer age, Long uniqueID) {
+        this.citizenName = citizenName;
+        this.age = age;
+        this.uniqueID = uniqueID;
     }
+}
+
+class AllCitizens {
 
     ArrayList<Citizen> citizenList = new ArrayList<Citizen>();
     
@@ -54,26 +64,30 @@ class AllCitizens {
         System.out.println("Citizen Name: "+citizenName+", Age: "+age+", Unique ID: "+uniqueID);
     }
 
+    void bookSlot() {
+
+    }
+
     void changeStatus() {
 
     }
 }
 
+class Hospital {
+    String hospitalName;
+    int pincode;
+    int uniquehID;
+    Slot slot;
+
+    Hospital(String hospitalName, int pincode) {
+        Random random = new Random();
+        this.hospitalName = hospitalName;
+        this.pincode = pincode;
+        this.uniquehID = random.nextInt(1000000);
+    }
+}
 
 class AllHospitals {
-    
-    class Hospital {
-        String hospitalName;
-        int pincode;
-        int uniquehID;
-    
-        Hospital(String hospitalName, int pincode) {
-            Random random = new Random();
-            this.hospitalName = hospitalName;
-            this.pincode = pincode;
-            this.uniquehID = random.nextInt(1000000);
-        }
-    }
 
     ArrayList<Hospital> hospitalList = new ArrayList<Hospital>();
 
@@ -83,6 +97,21 @@ class AllHospitals {
         System.out.println("Hospital Name: "+hospitalName+", PinCode: "+pincode+", UniqueID: "+toBeAdded.uniquehID);
     }
 
+    void slotAdditionWithID(Vaccine vaccineToBeAdded, int inputID, int dayNum, int quantity) {
+        Hospital temp;
+        for (int i = 0; i < hospitalList.size(); i++) {
+            int x = hospitalList.get(i).uniquehID;
+            if (x == inputID) {
+                temp = hospitalList.get(i);
+                temp.slot.dayNum = dayNum;
+                temp.slot.vaccineQuantity = quantity;
+                temp.slot.vaccineOfSlot = vaccineToBeAdded;
+                hospitalList.set(i, temp);
+                break;
+            }
+        }
+        System.out.println("Slot added by Hospital "+inputID+" for Day : "+dayNum+", Available Quantity: "+quantity+" of Vaccine "+vaccineToBeAdded.vaccineName);
+    }
 }
 
 public class A1_2020172 {
@@ -103,9 +132,11 @@ public class A1_2020172 {
     public static void main(String[] args) {
         System.out.println("CoWin Portal initialized....");
         menu();
+        
         AllVaccines vaccineList = new AllVaccines();
         AllHospitals hospitalList = new AllHospitals();
         AllCitizens citizenList = new AllCitizens();
+
         Scanner in = new Scanner(System.in);
         
         int queryNo = Integer.parseInt(in.nextLine());
@@ -121,8 +152,7 @@ public class A1_2020172 {
                     System.out.print("Gap Between Doses: ");
                     gap = Integer.parseInt(in.nextLine());
                 }
-                vaccineList.addition(vaccineName, noOfDoses, gap);
-                
+                vaccineList.addition(vaccineName, noOfDoses, gap);                
 
             } else if (queryNo == 2) {
                 System.out.print("Hospital Name: ");
@@ -149,11 +179,18 @@ public class A1_2020172 {
                 int hospitalID = Integer.parseInt(in.nextLine());
                 System.out.print("Enter number of Slots to be added: ");
                 int noOfSlots = Integer.parseInt(in.nextLine());
-                System.out.print("Enter Day Number: ");
-                int dayNum = Integer.parseInt(in.nextLine());
-                System.out.print("Enter Quantity: ");
-                int quantity = Integer.parseInt(in.nextLine());
-                
+                for (int i = 0; i < noOfSlots; i++) {
+                    System.out.print("Enter Day Number: ");
+                    int dayNum = Integer.parseInt(in.nextLine());
+                    System.out.print("Enter Quantity: ");
+                    int quantity = Integer.parseInt(in.nextLine());
+                    for (int j = 0; j < vaccineList.vaccineList.size(); j++) {
+                        System.out.println(j+". "+vaccineList.vaccineList.get(j).vaccineName);
+                    }
+                    int vaccineIndex = Integer.parseInt(in.nextLine());
+                    Vaccine vaccineToBeAdded = vaccineList.vaccineList.get(vaccineIndex);
+                    hospitalList.slotAdditionWithID(vaccineToBeAdded, hospitalID, dayNum, quantity);
+                }
 
             } else if (queryNo == 5) {
                 System.out.print("Enter patient Unique ID: ");
