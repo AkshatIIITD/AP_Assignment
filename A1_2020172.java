@@ -143,6 +143,10 @@ class AllHospitals {
         for (int i = 0; i < hospitalList.size(); i++) {
             if (hospitalList.get(i).uniquehID == hospitalID) {
                 ArrayList<Slot> temp = hospitalList.get(i).listOfSlots;
+                if (temp.size() == 0) {
+                    System.out.println("No slots available");
+                    break;
+                }
                 vaccinesReturned = new Vaccine[temp.size()];
                 for (int j = 0; j < temp.size(); j++) {
                     System.out.println(j+"-> Day: "+temp.get(j).dayNum+", Available Qty: "+temp.get(j).vaccineQuantity+", Vaccine: "+temp.get(j).vaccineOfSlot.vaccineName);
@@ -158,6 +162,10 @@ class AllHospitals {
         for (int i = 0; i < hospitalList.size(); i++) {
             if (hospitalList.get(i).uniquehID == hospitalID) {
                 ArrayList<Slot> temp = hospitalList.get(i).listOfSlots;
+                if (temp.size() == 0) {
+                    System.out.println("No slots available");
+                    break;
+                }
                 for (int j = 0; j < temp.size(); j++) {
                     System.out.println("Day: "+temp.get(j).dayNum+", Vaccine: "+temp.get(j).vaccineOfSlot.vaccineName+", Available Qty: "+temp.get(j).vaccineQuantity);
                 }
@@ -165,7 +173,16 @@ class AllHospitals {
             }
         }
     }
-
+    
+    void listHospitalViaVaccineName(String nameOfVac) {
+        for (int i = 0; i < hospitalList.size(); i++) {
+            for (int j = 0; j < hospitalList.get(i).listOfSlots.size(); j++) {
+                if(hospitalList.get(i).listOfSlots.get(j).vaccineOfSlot.vaccineName.equals(nameOfVac)) {
+                    System.out.println(hospitalList.get(i).uniquehID+" "+hospitalList.get(i).hospitalName);
+                }
+            }
+        }
+    }
 }
 
 public class A1_2020172 {
@@ -268,24 +285,27 @@ public class A1_2020172 {
                     System.out.println("Enter Hospital ID: ");
                     int hospitalID = Integer.parseInt(in.nextLine());
                     Vaccine[] returned = hospitalList.listSlotsfor5(hospitalID);
-                    System.out.print("Choose Slot: ");
-                    int slotNo = Integer.parseInt(in.nextLine());
-                    String[] name_vacName = citizenList.bookSlot(uniqueID, returned[slotNo]);
-                    System.out.println(name_vacName[0]+" vaccinated with "+name_vacName[1]);
+                    if(returned.length != 0) {
+                        System.out.print("Choose Slot: ");
+                        int slotNo = Integer.parseInt(in.nextLine());
+                        String[] name_vacName = citizenList.bookSlot(uniqueID, returned[slotNo]);
+                        System.out.println(name_vacName[0]+" vaccinated with "+name_vacName[1]);
+                    }
 
                 } else if (option == 2) {
 
                     System.out.print("Enter Vaccine Name");
                     String vaccineName = in.nextLine();
-                    //list hospitalIDs and hospitals here. 
+                    hospitalList.listHospitalViaVaccineName(vaccineName);
                     System.out.println("Enter Hospital ID: ");
                     int hospitalID = Integer.parseInt(in.nextLine());
-                    //
-                    //
-                    System.out.print("Choose Slot: ");
-                    int slotNo = Integer.parseInt(in.nextLine());
-                    //
-                    System.out.println(" vaccinated with ");                    
+                    Vaccine[] returned = hospitalList.listSlotsfor5(hospitalID);
+                    if(returned.length != 0) {
+                        System.out.print("Choose Slot: ");
+                        int slotNo = Integer.parseInt(in.nextLine());
+                        String[] name_vacName = citizenList.bookSlot(uniqueID, returned[slotNo]);
+                        System.out.println(name_vacName[0]+" vaccinated with "+name_vacName[1]);
+                    }                 
 
                 } else if (option == 3) {
                     continue;
