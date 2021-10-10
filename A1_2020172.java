@@ -45,6 +45,7 @@ class Citizen {
     Integer age;
     Long uniqueID;
     String vaccinationStatus;
+    int noOfDosesGiven;
 
     Citizen(String citizenName, Integer age, Long uniqueID) {
         this.citizenName = citizenName;
@@ -64,12 +65,23 @@ class AllCitizens {
         System.out.println("Citizen Name: "+citizenName+", Age: "+age+", Unique ID: "+uniqueID);
     }
 
-    void bookSlot() {
-
-    }
-
-    void changeStatus() {
-
+    String[] bookSlot(Long citizenID, Vaccine regVac) {
+        String[] name_vacName = new String[2];
+        for (int i = 0; i < citizenList.size(); i++) {
+            if (citizenID == citizenList.get(i).uniqueID) {
+                Citizen temp = citizenList.get(i);
+                temp.nameOfVaccineGiven = regVac.vaccineName;
+                temp.vaccinationStatus = "PARTIALLY VACCINATED";
+                if (regVac.noOfDoses == 1) {
+                    temp.vaccinationStatus = "FULLY VACCINATED";
+                }
+                citizenList.set(i, temp);
+                name_vacName[0] = temp.citizenName;
+                name_vacName[1] = temp.nameOfVaccineGiven;
+                break;
+            }
+        }
+        return name_vacName;
     }
 }
 
@@ -116,6 +128,30 @@ class AllHospitals {
         }
         System.out.println("Slot added by Hospital "+inputID+" for Day : "+dayNum+", Available Quantity: "+quantity+" of Vaccine "+vaccineToBeAdded.vaccineName);
     }
+
+    void listHospitalsWithPinCode(int pincode) {
+        for (int i = 0; i < hospitalList.size(); i++) {
+            if (hospitalList.get(i).pincode == pincode) {
+                System.out.println(hospitalList.get(i).uniquehID+" "+hospitalList.get(i).hospitalName);
+            }
+        }
+    }
+
+    Vaccine[] listSlots(int hospitalID) {
+        Vaccine[] vaccinesReturned = new Vaccine[0];
+        for (int i = 0; i < hospitalList.size(); i++) {
+            if (hospitalList.get(i).uniquehID == hospitalID) {
+                ArrayList<Slot> temp = hospitalList.get(i).listOfSlots;
+                vaccinesReturned = new Vaccine[temp.size()];
+                for (int j = 0; j < temp.size(); j++) {
+                    System.out.println(j+"-> Day: "+temp.get(j).dayNum+", Available Qty: "+temp.get(j).vaccineQuantity+", Vaccine: "+temp.get(j).vaccineOfSlot.vaccineName);
+                    vaccinesReturned[j] = temp.get(j).vaccineOfSlot;
+                }
+                break;
+            }
+        }
+        return vaccinesReturned;
+    }
 }
 
 public class A1_2020172 {
@@ -147,6 +183,7 @@ public class A1_2020172 {
         while (queryNo != 8) {
 
             if (queryNo == 1) {
+
                 System.out.print("Vaccine Name: ");
                 String vaccineName = in.nextLine();
                 System.out.print("Number of Doses: ");
@@ -159,6 +196,7 @@ public class A1_2020172 {
                 vaccineList.addition(vaccineName, noOfDoses, gap);                
 
             } else if (queryNo == 2) {
+
                 System.out.print("Hospital Name: ");
                 String hospitalName = in.nextLine();
                 System.out.print("PinCode: ");
@@ -166,19 +204,21 @@ public class A1_2020172 {
                 hospitalList.registration(hospitalName, pincode);
 
             } else if (queryNo == 3) {
+
                 System.out.print("Citizen Name: ");
                 String citizenName = in.nextLine();
                 System.out.print("Age: ");
                 int age = Integer.parseInt(in.nextLine());
                 System.out.print("Unique ID: ");
                 Long citizenID = Long.parseLong(in.nextLine());
-                if (age < 19) {
+                if (age < 18) {
                     System.out.println("Only above 18 are allowed");
                 } else {
                     citizenList.registration(citizenName, age, citizenID);
                 }
 
             } else if (queryNo == 4) {
+
                 System.out.print("Enter Hospital ID: ");
                 int hospitalID = Integer.parseInt(in.nextLine());
                 System.out.print("Enter number of Slots to be added: ");
@@ -198,28 +238,29 @@ public class A1_2020172 {
                 }
 
             } else if (queryNo == 5) {
+
                 System.out.print("Enter patient Unique ID: ");
-                int uniqueID = Integer.parseInt(in.nextLine());
+                Long uniqueID = Long.parseLong(in.nextLine());
                 System.out.println("1. Search by area");
                 System.out.println("2. Search by Vaccine");
                 System.out.println("3. Exit");
                 System.out.print("Enter option: ");
                 int option = Integer.parseInt(in.nextLine());
-                
+
                 if (option == 1) {
                     System.out.print("Enter PinCode: ");
                     int areaID = Integer.parseInt(in.nextLine());
-                    //list hospitalIDs and hospitals here. 
+                    hospitalList.listHospitalsWithPinCode(areaID);
                     System.out.println("Enter Hospital ID: ");
                     int hospitalID = Integer.parseInt(in.nextLine());
-                    //
-                    //
+                    Vaccine[] returned = hospitalList.listSlots(hospitalID);
                     System.out.print("Choose Slot: ");
                     int slotNo = Integer.parseInt(in.nextLine());
-                    //
-                    System.out.println(" vaccinated with ");
+                    String[] name_vacName = citizenList.bookSlot(uniqueID, returned[slotNo]);
+                    System.out.println(name_vacName[0]+" vaccinated with "+name_vacName[1]);
 
                 } else if (option == 2) {
+
                     System.out.print("Enter Vaccine Name");
                     String vaccineName = in.nextLine();
                     //list hospitalIDs and hospitals here. 
@@ -239,11 +280,13 @@ public class A1_2020172 {
                 }
 
             } else if (queryNo == 6) {
+
                 System.out.println("Enter Hospital ID: ");
                 int hospitalID = Integer.parseInt(in.nextLine());
                 //list all slots
 
             } else if (queryNo == 7) {
+
                 System.out.print("Enter patient Unique ID: ");
                 int uniqueID = Integer.parseInt(in.nextLine());
                 //status
