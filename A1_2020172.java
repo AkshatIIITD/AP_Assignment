@@ -310,7 +310,7 @@ public class A1_2020172 {
                 } else if (option == 3) {
                     continue;
                 } else {
-                    System.out.println("Wrong Option");
+                    System.out.println("Wrong Option, exiting");
                 }
 
             } else if (queryNo == 6) {
