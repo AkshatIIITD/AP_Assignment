@@ -184,6 +184,28 @@ class AllHospitals {
         return vaccinesReturned;
     }
 
+    Vaccine[] listSlotsfor5b(String hospitalID, String vacName) {
+        Vaccine[] vaccinesReturned = new Vaccine[0];
+        for (int i = 0; i < hospitalList.size(); i++) {
+            if (hospitalList.get(i).uniquehID.equals(hospitalID)) {
+                ArrayList<Slot> temp = hospitalList.get(i).listOfSlots;
+                if (temp.size() == 0) {
+                    System.out.println("No slots available");
+                    break;
+                }
+                vaccinesReturned = new Vaccine[temp.size()];
+                for (int j = 0; j < temp.size(); j++) {
+                    if (temp.get(j).vaccineOfSlot.vaccineName.equals(vacName)) {
+                        System.out.println(j+"-> Day: "+temp.get(j).dayNum+", Available Qty: "+temp.get(j).vaccineQuantity+", Vaccine: "+temp.get(j).vaccineOfSlot.vaccineName);
+                    }
+                    vaccinesReturned[j] = temp.get(j).vaccineOfSlot;
+                }
+                break;
+            }
+        }
+        return vaccinesReturned;
+    }
+
     void listSlotsOnly(String hospitalID) {
         for (int i = 0; i < hospitalList.size(); i++) {
             if (hospitalList.get(i).uniquehID.equals(hospitalID)) {
@@ -344,7 +366,7 @@ public class A1_2020172 {
                     hospitalList.listHospitalViaVaccineName(vaccineName);
                     System.out.print("Enter Hospital ID: ");
                     String hospitalID = in.nextLine();
-                    Vaccine[] returned = hospitalList.listSlotsfor5(hospitalID);
+                    Vaccine[] returned = hospitalList.listSlotsfor5b(hospitalID, vaccineName);
                     if(returned.length != 0) {
                         System.out.print("Choose Slot: ");
                         int slotNo = Integer.parseInt(in.nextLine());
