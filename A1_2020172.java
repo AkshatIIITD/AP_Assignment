@@ -13,7 +13,6 @@ class Slot {
         this.dayNum = dayNum;
         this.vaccineQuantity = vaccineQuantity;
     }
-
 }
 
 class Vaccine{
@@ -45,12 +44,15 @@ class Citizen {
     Long uniqueID;
     String vaccinationStatus;
     int noOfDosesGiven;
+    int nextDueDate = 1;
     Vaccine givenVac;
+
 
     Citizen(String citizenName, Integer age, Long uniqueID) {
         this.citizenName = citizenName;
         this.age = age;
         this.uniqueID = uniqueID;
+        this.noOfDosesGiven = 0;
     }
 
 }
@@ -61,20 +63,25 @@ class AllCitizens {
     
     void registration(String citizenName, int age, Long uniqueID) {
         Citizen toBeAdded = new Citizen(citizenName, age, uniqueID);
+        toBeAdded.givenVac = new Vaccine("nil", 0, 0);
         toBeAdded.vaccinationStatus = "REGISTERED";
         citizenList.add(toBeAdded);
         System.out.println("Citizen Name: "+citizenName+", Age: "+age+", Unique ID: "+uniqueID);
     }
     
-    int bookSlot(Long citizenID, Vaccine regVac) {
+    int bookSlot(Long citizenID, Vaccine regVac, int daynum) {
         int temp_index = 0;
         for (int i = 0; i < citizenList.size(); i++) {
             if (citizenID.equals(citizenList.get(i).uniqueID)) {
                 Citizen tempCitizen = citizenList.get(i);
+                if (daynum < tempCitizen.nextDueDate) {
+                    return -1;
+                }
                 tempCitizen.givenVac = regVac;
                 tempCitizen.vaccinationStatus = "PARTIALLY VACCINATED";
                 tempCitizen.noOfDosesGiven++;
-                if (regVac.noOfDoses == 1) {
+                tempCitizen.nextDueDate = tempCitizen.givenVac.gap + daynum;
+                if (regVac.noOfDoses == tempCitizen.noOfDosesGiven) {
                     tempCitizen.vaccinationStatus = "FULLY VACCINATED";
                 }
                 citizenList.set(i, tempCitizen);
@@ -289,7 +296,6 @@ public class A1_2020172 {
                     if(returned.length != 0) {
                         System.out.print("Choose Slot: ");
                         int slotNo = Integer.parseInt(in.nextLine());
-                        int ind = citizenList.bookSlot(uniqueID, returned[slotNo]);
                         int i = 0;
                         while(i < hospitalList.hospitalList.size()) {
                             if (hospitalList.hospitalList.get(i).uniquehID.equals(hospitalID)) {
@@ -298,12 +304,20 @@ public class A1_2020172 {
                         }
                         Hospital temp = hospitalList.hospitalList.get(i);
                         Slot temp1 = temp.listOfSlots.get(slotNo);
-                        temp1.vaccineQuantity--;
-                        temp.listOfSlots.set(slotNo, temp1);
-                        hospitalList.hospitalList.set(i, temp);
-                        System.out.println(citizenList.citizenList.get(ind).citizenName+" vaccinated with "+citizenList.citizenList.get(ind).givenVac.vaccineName);
+                        int daynum = temp1.dayNum;
+                        int ind = citizenList.bookSlot(uniqueID, returned[slotNo], daynum);
+                        if (ind != -1) {
+                            temp1.vaccineQuantity--;
+                            temp.listOfSlots.set(slotNo, temp1);
+                            hospitalList.hospitalList.set(i, temp);                    
+                            System.out.println(citizenList.citizenList.get(ind).citizenName+" vaccinated with "+citizenList.citizenList.get(ind).givenVac.vaccineName);
+                        } else {
+                            System.out.println("Invalid Slot");
+                        }
+                    } else {
+                        System.out.println("No slots available");
                     }
-
+                    
                 } else if (option == 2) {
 
                     System.out.print("Enter Vaccine Name: ");
@@ -315,7 +329,6 @@ public class A1_2020172 {
                     if(returned.length != 0) {
                         System.out.print("Choose Slot: ");
                         int slotNo = Integer.parseInt(in.nextLine());
-                        int ind = citizenList.bookSlot(uniqueID, returned[slotNo]);
                         int i = 0;
                         while(i < hospitalList.hospitalList.size()) {
                             if (hospitalList.hospitalList.get(i).uniquehID.equals(hospitalID)) {
@@ -324,13 +337,19 @@ public class A1_2020172 {
                         }
                         Hospital temp = hospitalList.hospitalList.get(i);
                         Slot temp1 = temp.listOfSlots.get(slotNo);
-                        temp1.vaccineQuantity--;
-                        temp.listOfSlots.set(slotNo, temp1);
-                        hospitalList.hospitalList.set(i, temp);
-                        System.out.println(citizenList.citizenList.get(ind).citizenName+" vaccinated with "+citizenList.citizenList.get(ind).givenVac.vaccineName);
+                        int daynum = temp1.dayNum;
+                        int ind = citizenList.bookSlot(uniqueID, returned[slotNo], daynum);
+                        if (ind != -1) {
+                            temp1.vaccineQuantity--;
+                            temp.listOfSlots.set(slotNo, temp1);
+                            hospitalList.hospitalList.set(i, temp);                    
+                            System.out.println(citizenList.citizenList.get(ind).citizenName+" vaccinated with "+citizenList.citizenList.get(ind).givenVac.vaccineName);
+                        } else {
+                            System.out.println("Invalid Slot");
+                        }
                     } else {
                         System.out.println("No slots available");
-                    }           
+                    }
 
                 } else if (option == 3) {
 
@@ -359,7 +378,7 @@ public class A1_2020172 {
                         vacName = temp.givenVac.vaccineName;
                         status = temp.vaccinationStatus;
                         dosesNo = temp.noOfDosesGiven;
-                        duedate = temp.givenVac.gap+1;
+                        duedate = temp.nextDueDate;
                         break;
                     }
                 }
