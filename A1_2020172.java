@@ -301,6 +301,7 @@ public class A1_2020172 {
                             if (hospitalList.hospitalList.get(i).uniquehID.equals(hospitalID)) {
                                 break;
                             }
+                            i++;
                         }
                         Hospital temp = hospitalList.hospitalList.get(i);
                         Slot temp1 = temp.listOfSlots.get(slotNo);
@@ -334,6 +335,7 @@ public class A1_2020172 {
                             if (hospitalList.hospitalList.get(i).uniquehID.equals(hospitalID)) {
                                 break;
                             }
+                            i++;
                         }
                         Hospital temp = hospitalList.hospitalList.get(i);
                         Slot temp1 = temp.listOfSlots.get(slotNo);
@@ -382,11 +384,15 @@ public class A1_2020172 {
                         break;
                     }
                 }
-                System.out.println(status);
-                System.out.println("Vaccine Given: "+vacName);
-                System.out.println("Number of Doses given: "+dosesNo);
-                if (!status.equals("FULLY VACCINATED")) {
-                    System.out.println("Next Dose due date: "+duedate);
+                if (status.equals("REGISTERED")) {
+                    System.out.println(status);
+                } else {
+                    System.out.println(status);
+                    System.out.println("Vaccine Given: "+vacName);
+                    System.out.println("Number of Doses given: "+dosesNo);
+                    if (!status.equals("FULLY VACCINATED")) {
+                        System.out.println("Next Dose due date: "+duedate);
+                    }
                 }
 
             } else {
