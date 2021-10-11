@@ -108,7 +108,7 @@ class Hospital {
         uniquehID = String.format("%06d", uniqueno);
     }
 
-    void slotCreation(Vaccine vaccineToBeAdded, int dayNum, int quantity) {
+    int slotCreation(Vaccine vaccineToBeAdded, int dayNum, int quantity) {
         Boolean notPresent = true;
         for (int i = 0; i < listOfSlots.size(); i++) {
             Slot slotCreated = listOfSlots.get(i);
@@ -118,12 +118,16 @@ class Hospital {
             ) {
                 slotCreated.vaccineQuantity += quantity;
                 notPresent = false;
+                return i;
             }
         }
+        int x = 0;
         if (notPresent) {
             Slot slotCreated = new Slot(vaccineToBeAdded, dayNum, quantity);
-            listOfSlots.add(slotCreated);           
+            x = listOfSlots.size();
+            listOfSlots.add(slotCreated);        
         }
+        return x;
     }
 }
 
@@ -144,9 +148,8 @@ class AllHospitals {
             String x = hospitalList.get(i).uniquehID;
             if (x.equals(inputID)) {
                 temp = hospitalList.get(i);
-                temp.slotCreation(vaccineToBeAdded, dayNum, quantity);
+                y = temp.slotCreation(vaccineToBeAdded, dayNum, quantity);
                 hospitalList.set(i, temp);
-                y = i;
                 break;
             }
         }
