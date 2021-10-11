@@ -109,8 +109,21 @@ class Hospital {
     }
 
     void slotCreation(Vaccine vaccineToBeAdded, int dayNum, int quantity) {
-        Slot slotCreated = new Slot(vaccineToBeAdded, dayNum, quantity);
-        listOfSlots.add(slotCreated);
+        Boolean notPresent = true;
+        for (int i = 0; i < listOfSlots.size(); i++) {
+            Slot slotCreated = listOfSlots.get(i);
+            if (
+                slotCreated.vaccineOfSlot.vaccineName.equals(vaccineToBeAdded.vaccineName) 
+                && slotCreated.dayNum == dayNum
+            ) {
+                slotCreated.vaccineQuantity += quantity;
+                notPresent = false;
+            }
+        }
+        if (notPresent) {
+            Slot slotCreated = new Slot(vaccineToBeAdded, dayNum, quantity);
+            listOfSlots.add(slotCreated);           
+        }
     }
 }
 
@@ -125,17 +138,19 @@ class AllHospitals {
     }
 
     void slotAdditionWithID(Vaccine vaccineToBeAdded, String inputID, int dayNum, int quantity) {
-        Hospital temp;
+        Hospital temp = new Hospital("a", 0);
+        int y = 0;
         for (int i = 0; i < hospitalList.size(); i++) {
             String x = hospitalList.get(i).uniquehID;
             if (x.equals(inputID)) {
                 temp = hospitalList.get(i);
                 temp.slotCreation(vaccineToBeAdded, dayNum, quantity);
                 hospitalList.set(i, temp);
+                y = i;
                 break;
             }
         }
-        System.out.println("Slot added by Hospital "+inputID+" for Day : "+dayNum+", Available Quantity: "+quantity+" of Vaccine "+vaccineToBeAdded.vaccineName);
+        System.out.println("Slot added by Hospital "+inputID+" for Day: "+dayNum+", Available Quantity: "+temp.listOfSlots.get(y).vaccineQuantity+" of Vaccine "+vaccineToBeAdded.vaccineName);
     }
 
     void listHospitalsWithPinCode(int pincode) {
