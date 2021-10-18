@@ -1,13 +1,5 @@
 import java.util.Scanner;
 
-class Grades {
-
-}
-
-class Lectures {
-
-}
-
 public class A2_2020172{
 	public static void mainMenu() {
 		System.out.println("");
