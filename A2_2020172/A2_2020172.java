@@ -54,68 +54,157 @@ public class A2_2020172{
 			if (mainMenuSelection == 1) {
 
 				System.out.println("Instructors:");
-
+				//print instructors
 
 				System.out.print("Choose id: ");
 				int instID = Integer.parseInt(in.nextLine());
 
-				System.out.println("Welcome ");//add id
+				System.out.println("Welcome I"+instID);
+
 				instructorMenu();
 				int instMenuSelection = Integer.parseInt(in.nextLine());
 				
-				if (instMenuSelection == 1) {
-
-				} else if (instMenuSelection == 2) {
-
-				} else if (instMenuSelection == 3) {
+				while (instMenuSelection != 9) {
 					
-				} else if (instMenuSelection == 4) {
-					
-				} else if (instMenuSelection == 5) {
-					
-				} else if (instMenuSelection == 6) {
-					
-				} else if (instMenuSelection == 7) {
+					if (instMenuSelection == 1) {
+						
+						System.out.println("1. Add Lecture Slide");
+						System.out.println("1. Add Lecture Video");
+						int lectureMenuOption = Integer.parseInt(in.nextLine());
+						
+						if (lectureMenuOption == 1) {
+							System.out.print("Enter topic of slides: ");
+							String slideName = in.nextLine();
+							System.out.print("Enter number of slides: ");
+							int noOfSlides = Integer.parseInt(in.nextLine());
+							ArrayList<String> listOfSlideContent = new ArrayList<>();
+							for (int i = 0; i < noOfSlides; i++) {
+								System.out.println("Content of slide "+i);
+								String content = in.nextLine();
+								listOfSlideContent.add(content);
+							}
 
-				} else if (instMenuSelection == 8) {
+	
+						} else if (lectureMenuOption == 2) {
+							System.out.print("Enter topic of video: ");
+							String topic = in.nextLine();
+							System.out.print("Enter filename of video: ");
+							String fileName = in.nextLine();
+							if (fileName.substring(fileName.length()-4).equals(".mp4")) {
+								//add video
+								
+							} else {
+								System.out.println("Wrong Syntax!");
+							}
+						}
+	
+	
+					} else if (instMenuSelection == 2) {
+						System.out.println("1. Add Assignment");
+						System.out.println("1. Add Quiz");
+						int assessMenuOption = Integer.parseInt(in.nextLine());
+						
+						if (assessMenuOption == 1) {
+							System.out.print("Enter problem statement: ");
+							String problemStatement = in.nextLine();
+							System.out.print("Enter max marks: ");
+							int maxMarks = Integer.parseInt(in.nextLine());
+							//add assignment
+	
+						} else if (assessMenuOption == 2) {
+							System.out.print("Enter quiz question: ");
+							String quizQuestion = in.nextLine();
+							//add quiz
 
-				} else if (instMenuSelection == 9) {
-
+						}
+	
+					} else if (instMenuSelection == 3) {
+						
+	
+	
+					} else if (instMenuSelection == 4) {
+						
+	
+	
+					} else if (instMenuSelection == 5) {
+						
+	
+	
+					} else if (instMenuSelection == 6) {
+						
+	
+	
+					} else if (instMenuSelection == 7) {
+						//print comments
+	
+	
+					} else if (instMenuSelection == 8) {
+						System.out.print("Enter comment: ");
+						String commentToBeAdded = in.nextLine();
+						//add comment
+					}
+					System.out.println("Welcome ");//add id
+					instructorMenu();
+					instMenuSelection = Integer.parseInt(in.nextLine());
 				}
-
 
 			} else if (mainMenuSelection == 2) {
 				
 				System.out.println("Students:");
-
+				//print students
 
 				System.out.print("Choose id: ");
 				int stuID = Integer.parseInt(in.nextLine());
 
-				System.out.println("Welcome ");//add id
+				System.out.println("Welcome S"+stuID);
 				studentMenu();
 				int stuMenuSelection = Integer.parseInt(in.nextLine());
 				
-				if (stuMenuSelection == 1) {
+				while(stuMenuSelection != 7) {
 
-				} else if (stuMenuSelection == 2) {
+					if (stuMenuSelection == 1) {
+						//print lecture materials
 
-				} else if (stuMenuSelection == 3) {
-					
-				} else if (stuMenuSelection == 4) {
-					
-				} else if (stuMenuSelection == 5) {
-					
-				} else if (stuMenuSelection == 6) {
-					
-				} else if (stuMenuSelection == 7) {
+					} else if (stuMenuSelection == 2) {
+						//print assessments
 
+					} else if (stuMenuSelection == 3) {
+						//print pending assessments
+						System.out.print("Enter ID of assessment: ");
+						int asssessID = Integer.parseInt(in.nextLine());
+						System.out.print("Enter filename of assignment: ");
+						String assessfileName = in.nextLine();
+						if (assessfileName.substring(assessfileName.length()-4).equals(".zip")) {
+							//add assignment
+							
+						} else {
+							System.out.println("Wrong Syntax!");
+						}
+
+					} else if (stuMenuSelection == 4) {
+						System.out.println("Graded Submissions");
+						//print graded subm
+
+						System.out.println("-------------------------");
+						System.out.println("Graded Submissions");
+						//print ungraded subm
+
+					} else if (stuMenuSelection == 5) {
+						//print comments
+
+					} else if (stuMenuSelection == 6) {
+						System.out.print("Enter comment: ");
+						String commentToBeAdded = in.nextLine();
+						//add comment					
+
+					}
+					System.out.println("Welcome ");//add id
+					studentMenu();
+					stuMenuSelection = Integer.parseInt(in.nextLine());
 				}
-
 			} else {
 				System.out.println("Wrong option");
 			}
-
 			mainMenu();
 			mainMenuSelection = Integer.parseInt(in.nextLine());
 		}
