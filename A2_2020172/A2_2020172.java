@@ -1,3 +1,46 @@
+
+
+
+
 public class A2_2020172{
-	public static void main
+	public static void mainMenu() {
+		System.out.println("");
+		System.out.println("Welcome to BackPack");
+		System.out.println("1. Enter as instructor");
+		System.out.println("2. Enter as student");
+		System.out.println("3. Exit");
+		System.out.println("");
+	}
+
+	public static void instructorMenu() {
+		System.out.println("");
+		System.out.println("INSTRUCTOR MENU");
+		System.out.println("1. Add class material");
+		System.out.println("2. Add assessments");
+		System.out.println("3. View lecture materials");
+		System.out.println("4. View assessments");
+		System.out.println("5. Grade assessments");
+		System.out.println("6. Close assessment");
+		System.out.println("7. View comments");
+		System.out.println("8. Add comments");
+		System.out.println("9. Logout");
+		System.out.println("");
+	}
+
+	public static void studentMenu() {
+		System.out.println("");
+		System.out.println("STUDENT MENU");
+		System.out.println("1. View lecture materials");
+		System.out.println("2. View assessments");
+		System.out.println("3. Submit assessment");
+		System.out.println("4. View grades");
+		System.out.println("5. View comments");
+		System.out.println("6. Add comments");
+		System.out.println("7. Logout");
+		System.out.println("");
+	}
+	
+	public static void main(String[] args) {
+		
+	}
 }	
