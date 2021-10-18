@@ -1,6 +1,12 @@
+import java.util.Scanner;
 
+class Grades {
 
+}
 
+class Lectures {
+
+}
 
 public class A2_2020172{
 	public static void mainMenu() {
@@ -41,6 +47,44 @@ public class A2_2020172{
 	}
 	
 	public static void main(String[] args) {
+		mainMenu();
+	
 		
+		Scanner in = new Scanner(System.in);
+		int mainMenuSelection = Integer.parseInt(in.nextLine());
+		while (mainMenuSelection != 3) {
+			
+			if (mainMenuSelection == 1) {
+
+				System.out.println("Instructors:");
+
+
+				System.out.print("Choose id: ");
+				int instID = Integer.parseInt(in.nextLine());
+
+				System.out.println("Welcome ");//add id
+				instructorMenu();
+
+
+			} else if (mainMenuSelection == 2) {
+				
+				System.out.println("Students:");
+
+
+				System.out.print("Choose id: ");
+				int stuID = Integer.parseInt(in.nextLine());
+
+				System.out.println("Welcome ");//add id
+				studentMenu();
+
+
+			} else {
+				System.out.println("Wrong option");
+			}
+
+			mainMenu();
+			mainMenuSelection = Integer.parseInt(in.nextLine());
+		}
+		in.close();
 	}
 }	
