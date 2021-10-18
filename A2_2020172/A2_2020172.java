@@ -119,20 +119,31 @@ public class A2_2020172{
 						}
 	
 					} else if (instMenuSelection == 3) {
-						
+						//print lecture materials
 	
 	
 					} else if (instMenuSelection == 4) {
-						
+						//print assessments
 	
 	
 					} else if (instMenuSelection == 5) {
+						System.out.println("List of assessments");
+						//list assessments.
 						
-	
+						System.out.print("Enter ID of assessment to view submissions: ");
+						int assessmentID = Integer.parseInt(in.nextLine());
+						System.out.println("Choose ID from these ungraded submissions");
+						//list ids of students with that assessment as ungraded
+						int ungradedstudentID = Integer.parseInt(in.nextLine());
+
 	
 					} else if (instMenuSelection == 6) {
-						
-	
+						System.out.println("List of open assessments");
+						//list assessments.
+
+						System.out.print("Enter id of assignment to close: ");
+						int assessmentIDtoclose = Integer.parseInt(in.nextLine());
+						//close assessment
 	
 					} else if (instMenuSelection == 7) {
 						//print comments
@@ -143,7 +154,7 @@ public class A2_2020172{
 						String commentToBeAdded = in.nextLine();
 						//add comment
 					}
-					System.out.println("Welcome ");//add id
+					System.out.println("Welcome I"+instID);//add id
 					instructorMenu();
 					instMenuSelection = Integer.parseInt(in.nextLine());
 				}
@@ -198,7 +209,7 @@ public class A2_2020172{
 						//add comment					
 
 					}
-					System.out.println("Welcome ");//add id
+					System.out.println("Welcome S"+stuID);
 					studentMenu();
 					stuMenuSelection = Integer.parseInt(in.nextLine());
 				}
