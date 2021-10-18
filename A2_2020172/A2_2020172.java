@@ -1,6 +1,11 @@
 import java.util.Scanner;
+import java.util.ArrayList;
+
 
 public class A2_2020172{
+	ArrayList<User> instructorList = new ArrayList<User>();
+
+
 	public static void mainMenu() {
 		System.out.println("");
 		System.out.println("Welcome to BackPack");
@@ -56,6 +61,27 @@ public class A2_2020172{
 
 				System.out.println("Welcome ");//add id
 				instructorMenu();
+				int instMenuSelection = Integer.parseInt(in.nextLine());
+				
+				if (instMenuSelection == 1) {
+
+				} else if (instMenuSelection == 2) {
+
+				} else if (instMenuSelection == 3) {
+					
+				} else if (instMenuSelection == 4) {
+					
+				} else if (instMenuSelection == 5) {
+					
+				} else if (instMenuSelection == 6) {
+					
+				} else if (instMenuSelection == 7) {
+
+				} else if (instMenuSelection == 8) {
+
+				} else if (instMenuSelection == 9) {
+
+				}
 
 
 			} else if (mainMenuSelection == 2) {
@@ -68,7 +94,23 @@ public class A2_2020172{
 
 				System.out.println("Welcome ");//add id
 				studentMenu();
+				int stuMenuSelection = Integer.parseInt(in.nextLine());
+				
+				if (stuMenuSelection == 1) {
 
+				} else if (stuMenuSelection == 2) {
+
+				} else if (stuMenuSelection == 3) {
+					
+				} else if (stuMenuSelection == 4) {
+					
+				} else if (stuMenuSelection == 5) {
+					
+				} else if (stuMenuSelection == 6) {
+					
+				} else if (stuMenuSelection == 7) {
+
+				}
 
 			} else {
 				System.out.println("Wrong option");
