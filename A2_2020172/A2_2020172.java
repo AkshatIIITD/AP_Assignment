@@ -64,7 +64,6 @@ public class A2_2020172{
 		
 		int mainMenuSelection = Integer.parseInt(in.nextLine());
 		while (mainMenuSelection != 3) {
-			
 			if (mainMenuSelection == 1) {
 				System.out.println("Instructors:");
 				for (int i = 0; i < instList.size(); i++) {
@@ -72,16 +71,11 @@ public class A2_2020172{
 				}
 				System.out.print("Choose id: ");
 				int instID = Integer.parseInt(in.nextLine());
-
 				System.out.println("Welcome I"+instID);
-
 				instructorMenu();
 				int instMenuSelection = Integer.parseInt(in.nextLine());
-				
 				while (instMenuSelection != 9) {
-					
 					if (instMenuSelection == 1) {
-						
 						System.out.println("1. Add Lecture Slide");
 						System.out.println("1. Add Lecture Video");
 						int lectureMenuOption = Integer.parseInt(in.nextLine());
@@ -172,7 +166,7 @@ public class A2_2020172{
 						System.out.println("Max Marks: "+temp.assessmentsOfThisStudent.get(assessmentID).getMaxMarks());
 						System.out.print("Marks scored: ");
 						int marksScored = Integer.parseInt(in.nextLine());
-						temp.gradeAssessment(assessmentID, marksScored);
+						temp.gradeAssessment(assessmentID, marksScored, instID);
 						stuList.set(ungradedstudentID, temp);
 	
 					} else if (instMenuSelection == 6) {
@@ -207,6 +201,7 @@ public class A2_2020172{
 						commentsList.add(commentToBeAdded+" - I"+instID);
 						commentsList.add(date.toString());
 						commentsList.add("");
+
 					}
 					System.out.println("Welcome I"+instID);
 					instructorMenu();
@@ -214,20 +209,16 @@ public class A2_2020172{
 				}
 
 			} else if (mainMenuSelection == 2) {
-				
 				System.out.println("Students:");
 				for (int i = 0; i < stuList.size(); i++) {
 					System.out.println(i+" - S"+stuList.get(i).stuID);
 				}
 				System.out.print("Choose id: ");
 				int stuID = Integer.parseInt(in.nextLine());
-
 				System.out.println("Welcome S"+stuID);
 				studentMenu();
 				int stuMenuSelection = Integer.parseInt(in.nextLine());
-				
 				while(stuMenuSelection != 7) {
-
 					if (stuMenuSelection == 1) {
 						for (Lectures i : lectureList) {
 							i.viewLectureMaterial();
@@ -240,44 +231,43 @@ public class A2_2020172{
 
 					} else if (stuMenuSelection == 3) {
 						System.out.println("Pending assessments");
-						//print pending assessments
-						
-
-						System.out.print("Enter ID of assessment: ");
-						int indexOfAssessment = Integer.parseInt(in.nextLine());
-						if (assessmentsList.get(indexOfAssessment).assignmentStatusCheck()) {
-							
-							if (assessmentsList.get(indexOfAssessment).getClass().getSimpleName().equals("Assignment")) {
-								System.out.print("Enter filename of assignment: ");
-								String assessfileName = in.nextLine();
-								if (assessfileName.substring(assessfileName.length()-4).equals(".zip")) {
+						boolean x = stuList.get(stuID).printPendingAssessments();
+						if (x == false) {
+							System.out.println("No pending assessments");
+						} else {
+							System.out.print("Enter ID of assessment: ");
+							int indexOfAssessment = Integer.parseInt(in.nextLine());
+							if (assessmentsList.get(indexOfAssessment).assessmentStatusCheck()) {
+								
+								if (assessmentsList.get(indexOfAssessment).getClass().getSimpleName().equals("Assignment")) {
+									System.out.print("Enter filename of assignment: ");
+									String assessfileName = in.nextLine();
+									if (assessfileName.substring(assessfileName.length()-4).equals(".zip")) {
+										Student temp = stuList.get(stuID); 
+										temp.submitAssessment(indexOfAssessment, assessfileName);
+										stuList.set(stuID, temp);
+									} else {
+										System.out.println("Wrong Syntax!");
+									}
+								} else {
+									System.out.print(assessmentsList.get(indexOfAssessment).getAssessmentName());
+									String assessfileName = in.nextLine();
 									Student temp = stuList.get(stuID); 
 									temp.submitAssessment(indexOfAssessment, assessfileName);
 									stuList.set(stuID, temp);
-								} else {
-									System.out.println("Wrong Syntax!");
 								}
+
 							} else {
-								System.out.print(assessmentsList.get(indexOfAssessment).getAssessmentName());
-								String assessfileName = in.nextLine();
-								Student temp = stuList.get(stuID); 
-								temp.submitAssessment(indexOfAssessment, assessfileName);
-								stuList.set(stuID, temp);
+								System.out.println("Assessment Closed");
 							}
-
-						} else {
-							System.out.println("Assessment Closed");
-						}
-
-						
+						}				
 
 					} else if (stuMenuSelection == 4) {
 						System.out.println("Graded Submissions");
-						//print graded subm
-
+						stuList.get(stuID).printGradedAssignments();
+						System.out.println("Ungraded Submissions");
+						stuList.get(stuID).printUngradedAssignments();
 						System.out.println("-------------------------");
-						System.out.println("Graded Submissions");
-						//print ungraded subm
 
 					} else if (stuMenuSelection == 5) {
 						for (int i = 0; i < commentsList.size(); i++) {
