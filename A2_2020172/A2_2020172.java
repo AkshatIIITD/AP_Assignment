@@ -57,11 +57,10 @@ public class A2_2020172{
 		instList.add(new Instructor(1));
 
 		ArrayList<Student> stuList = new ArrayList<>();
-		stuList.add(new Student(0, assessmentsList));
-		stuList.add(new Student(1, assessmentsList));
-		stuList.add(new Student(2, assessmentsList));
-		
-		
+		stuList.add(new Student(0));
+		stuList.add(new Student(1));
+		stuList.add(new Student(2));
+
 		int mainMenuSelection = Integer.parseInt(in.nextLine());
 		while (mainMenuSelection != 3) {
 			if (mainMenuSelection == 1) {
@@ -77,7 +76,7 @@ public class A2_2020172{
 				while (instMenuSelection != 9) {
 					if (instMenuSelection == 1) {
 						System.out.println("1. Add Lecture Slide");
-						System.out.println("1. Add Lecture Video");
+						System.out.println("2. Add Lecture Video");
 						int lectureMenuOption = Integer.parseInt(in.nextLine());
 						
 						if (lectureMenuOption == 1) {
@@ -86,8 +85,9 @@ public class A2_2020172{
 							System.out.print("Enter number of slides: ");
 							int noOfSlides = Integer.parseInt(in.nextLine());
 							ArrayList<String> listOfSlideContent = new ArrayList<>();
+							System.out.println("Enter content of slides");
 							for (int i = 0; i < noOfSlides; i++) {
-								System.out.println("Content of slide "+(i+1)+" : ");
+								System.out.print("Content of slide "+(i+1)+": ");
 								String content = in.nextLine();
 								listOfSlideContent.add(content);
 							}
@@ -106,7 +106,7 @@ public class A2_2020172{
 	
 					} else if (instMenuSelection == 2) {
 						System.out.println("1. Add Assignment");
-						System.out.println("1. Add Quiz");
+						System.out.println("2. Add Quiz");
 						int assessMenuOption = Integer.parseInt(in.nextLine());
 						
 						if (assessMenuOption == 1) {
@@ -118,8 +118,8 @@ public class A2_2020172{
 							
 							Assignment toBeAdded = new Assignment(problemStatement, maxMarks, indexOfAssessment);
 							assessmentsList.add(toBeAdded);
-							for (Student student : stuList) {
-								student.addAssessmentForStudent(toBeAdded);
+							for (Student stu : stuList) {
+								stu.addAssessmentForStudent(toBeAdded);
 							}
 
 						} else if (assessMenuOption == 2) {
@@ -129,19 +129,21 @@ public class A2_2020172{
 							
 							Quiz toBeAdded = new Quiz(quizQuestion, indexOfAssessment);
 							assessmentsList.add(toBeAdded);
-							for (Student student : stuList) {
-								student.addAssessmentForStudent(toBeAdded);
+							for (Student stu : stuList) {
+								stu.addAssessmentForStudent(toBeAdded);
 							}
 						}
 	
 					} else if (instMenuSelection == 3) {
 						for (Lectures i : lectureList) {
 							i.viewLectureMaterial();
+							System.out.println();
 						}
 	
 					} else if (instMenuSelection == 4) {
 						for (Assessments i : assessmentsList) {
 							i.viewAssesmentMaterial();
+							System.out.println();
 						}
 	
 					} else if (instMenuSelection == 5) {
@@ -154,7 +156,8 @@ public class A2_2020172{
 						
 						System.out.println("Choose ID from these ungraded submissions");
 						for (int i = 0; i < stuList.size(); i++) {
-							if (!stuList.get(i).assessmentsOfThisStudent.get(assessmentID).gradedStatusCheck()) {
+							boolean x = stuList.get(i).assessmentsOfThisStudent.get(assessmentID).gradedStatusCheck();
+							if (!x) {
 								System.out.println(i+". S"+stuList.get(i).stuID);
 							}
 						}
@@ -222,28 +225,30 @@ public class A2_2020172{
 					if (stuMenuSelection == 1) {
 						for (Lectures i : lectureList) {
 							i.viewLectureMaterial();
+							System.out.println();
 						}
 
 					} else if (stuMenuSelection == 2) {
 						for (Assessments i : assessmentsList) {
 							i.viewAssesmentMaterial();
+							System.out.println();
 						}
 
 					} else if (stuMenuSelection == 3) {
 						System.out.println("Pending assessments");
-						boolean x = stuList.get(stuID).printPendingAssessments();
+						Student temp = stuList.get(stuID);
+						boolean x = temp.printPendingAssessments();
 						if (x == false) {
 							System.out.println("No pending assessments");
 						} else {
 							System.out.print("Enter ID of assessment: ");
 							int indexOfAssessment = Integer.parseInt(in.nextLine());
-							if (assessmentsList.get(indexOfAssessment).assessmentStatusCheck()) {
-								
-								if (assessmentsList.get(indexOfAssessment).getClass().getSimpleName().equals("Assignment")) {
+							
+							if (temp.assessmentsOfThisStudent.get(indexOfAssessment).assessmentStatusCheck()) {
+								if (temp.assessmentsOfThisStudent.get(indexOfAssessment).getClass().getSimpleName().equals("Assignment")) {
 									System.out.print("Enter filename of assignment: ");
 									String assessfileName = in.nextLine();
 									if (assessfileName.substring(assessfileName.length()-4).equals(".zip")) {
-										Student temp = stuList.get(stuID); 
 										temp.submitAssessment(indexOfAssessment, assessfileName);
 										stuList.set(stuID, temp);
 									} else {
@@ -252,7 +257,6 @@ public class A2_2020172{
 								} else {
 									System.out.print(assessmentsList.get(indexOfAssessment).getAssessmentName());
 									String assessfileName = in.nextLine();
-									Student temp = stuList.get(stuID); 
 									temp.submitAssessment(indexOfAssessment, assessfileName);
 									stuList.set(stuID, temp);
 								}
@@ -265,6 +269,7 @@ public class A2_2020172{
 					} else if (stuMenuSelection == 4) {
 						System.out.println("Graded Submissions");
 						stuList.get(stuID).printGradedAssignments();
+						System.out.println("-------------------------");
 						System.out.println("Ungraded Submissions");
 						stuList.get(stuID).printUngradedAssignments();
 						System.out.println("-------------------------");

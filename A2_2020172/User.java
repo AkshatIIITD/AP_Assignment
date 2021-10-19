@@ -46,16 +46,17 @@ class Instructor implements User {
 class Student implements User {
     
     int stuID;
-    ArrayList<Assessments> assessmentsOfThisStudent;
+    ArrayList<Assessments> assessmentsOfThisStudent = new ArrayList<Assessments>();
     
-    Student(int stuID, ArrayList<Assessments> assessmentsOfThisStudent) {
+    Student(int stuID) {
         this.stuID = stuID;
-        this.assessmentsOfThisStudent = assessmentsOfThisStudent;
     }
 
     @Override
     public void gradeAssessment(int assessmentID, int marksScored, int graderID) {
-        assessmentsOfThisStudent.get(assessmentID).gradeTask(marksScored, graderID);
+        Assessments temp = assessmentsOfThisStudent.get(assessmentID);
+        temp.gradeTask(marksScored, graderID);
+        assessmentsOfThisStudent.set(assessmentID, temp);
     }
 
     @Override
@@ -65,7 +66,9 @@ class Student implements User {
 
     @Override
     public void submitAssessment(int assessmentID, String submission) {
-        assessmentsOfThisStudent.get(assessmentID).setAssessmentSol(submission);
+        Assessments temp = assessmentsOfThisStudent.get(assessmentID);
+        temp.setAssessmentSol(submission);
+        assessmentsOfThisStudent.set(assessmentID, temp);
     }
 
     @Override

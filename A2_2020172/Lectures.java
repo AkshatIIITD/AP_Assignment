@@ -20,9 +20,9 @@ class LectureSlide implements Lectures {
 
     @Override
     public void viewLectureMaterial() {
-        System.out.println("Title:" +slideName);
+        System.out.println("Title: " +slideName);
         for (int i = 0; i < listOfSlideContent.size(); i++) {
-            System.out.println("Slide "+(i+1)+listOfSlideContent.get(i));
+            System.out.println("Slide "+(i+1)+": "+listOfSlideContent.get(i));
         }
         System.out.println("Number of slides: "+listOfSlideContent.size());
         System.out.println("Date of upload: "+dateOfUpload);
@@ -47,7 +47,7 @@ class LectureVideo implements Lectures {
 
     @Override
     public void viewLectureMaterial() {
-        System.out.println("Title of video:" + videoTopic);
+        System.out.println("Title of video: " + videoTopic);
         System.out.println("Video file: "+ videoFile);
         System.out.println("Date of upload: "+dateOfUpload);
         System.out.println("Uploaded by: I"+uploaderID);
