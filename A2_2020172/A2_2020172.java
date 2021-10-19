@@ -4,8 +4,6 @@ import java.util.Date;
 
 
 public class A2_2020172{
-	ArrayList<User> instructorList = new ArrayList<User>();
-
 
 	public static void mainMenu() {
 		System.out.println("");
@@ -46,12 +44,14 @@ public class A2_2020172{
 	
 	public static void main(String[] args) {
 		mainMenu();
-	
 		
 		Scanner in = new Scanner(System.in);
-		
 		Date date = new Date();
-		ArrayList<String> commentsList = new ArrayList<>();
+
+		ArrayList<String> commentsList = new ArrayList<String>();
+		ArrayList<User> usersList = new ArrayList<User>();
+		ArrayList<Assessments> assessmentsList = new ArrayList<Assessments>();
+		ArrayList<Lectures> lectureList = new ArrayList<Lectures>(); 
 
 		int mainMenuSelection = Integer.parseInt(in.nextLine());
 		while (mainMenuSelection != 3) {
@@ -59,7 +59,11 @@ public class A2_2020172{
 			if (mainMenuSelection == 1) {
 
 				System.out.println("Instructors:");
-				//print instructors
+				for (User user : usersList) {
+					if (user instanceof Instructor){
+						//print inst details
+					}
+				}
 
 				System.out.print("Choose id: ");
 				int instID = Integer.parseInt(in.nextLine());
@@ -88,21 +92,18 @@ public class A2_2020172{
 								String content = in.nextLine();
 								listOfSlideContent.add(content);
 							}
-
-	
+							lectureList.add(new LectureSlide(slideName, listOfSlideContent, date.toString(), instID));
 						} else if (lectureMenuOption == 2) {
 							System.out.print("Enter topic of video: ");
 							String topic = in.nextLine();
 							System.out.print("Enter filename of video: ");
 							String fileName = in.nextLine();
 							if (fileName.substring(fileName.length()-4).equals(".mp4")) {
-								//add video
-								
+								lectureList.add(new LectureVideo(topic, fileName, date.toString(), instID));
 							} else {
 								System.out.println("Wrong Syntax!");
 							}
 						}
-	
 	
 					} else if (instMenuSelection == 2) {
 						System.out.println("1. Add Assignment");
@@ -114,26 +115,30 @@ public class A2_2020172{
 							String problemStatement = in.nextLine();
 							System.out.print("Enter max marks: ");
 							int maxMarks = Integer.parseInt(in.nextLine());
-							//add assignment
-	
+							int indexOfAssessment = assessmentsList.size();
+							assessmentsList.add(new Assignment(problemStatement, maxMarks, indexOfAssessment));
 						} else if (assessMenuOption == 2) {
 							System.out.print("Enter quiz question: ");
 							String quizQuestion = in.nextLine();
-							//add quiz
-
+							int indexOfAssessment = assessmentsList.size();
+							assessmentsList.add(new Quiz(quizQuestion, indexOfAssessment));
 						}
 	
 					} else if (instMenuSelection == 3) {
-						//print lecture materials
-	
+						for (Lectures i : lectureList) {
+							i.viewLectureMaterial();
+						}
 	
 					} else if (instMenuSelection == 4) {
-						//print assessments
-	
+						for (Assessments i : assessmentsList) {
+							i.viewAssesmentMaterial();
+						}
 	
 					} else if (instMenuSelection == 5) {
 						System.out.println("List of assessments");
-						//list assessments.
+						for (Assessments i : assessmentsList) {
+							i.viewAssesmentMaterial();
+						}
 						
 						System.out.print("Enter ID of assessment to view submissions: ");
 						int assessmentID = Integer.parseInt(in.nextLine());
@@ -148,11 +153,18 @@ public class A2_2020172{
 	
 					} else if (instMenuSelection == 6) {
 						System.out.println("List of open assessments");
-						//list assessments.
-
+						for (int i = 0; i < assessmentsList.size(); i++) {
+							if(!assessmentsList.get(i).gradedStatusCheck()) {
+								assessmentsList.get(i).viewAssesmentMaterial();
+							}
+						}
 						System.out.print("Enter id of assignment to close: ");
 						int assessmentIDtoclose = Integer.parseInt(in.nextLine());
-						//close assessment
+						for (Assessments assessment : assessmentsList) {
+							if (assessment.getIndexOfAssessment() == assessmentIDtoclose) {
+								assessment.closeTask();
+							}
+						}
 	
 					} else if (instMenuSelection == 7) {
 						for (int i = 0; i < commentsList.size(); i++) {
@@ -167,7 +179,7 @@ public class A2_2020172{
 						commentsList.add(date.toString());
 						commentsList.add("");
 					}
-					System.out.println("Welcome I"+instID);//add id
+					System.out.println("Welcome I"+instID);
 					instructorMenu();
 					instMenuSelection = Integer.parseInt(in.nextLine());
 				}
@@ -175,8 +187,11 @@ public class A2_2020172{
 			} else if (mainMenuSelection == 2) {
 				
 				System.out.println("Students:");
-				//print students
-
+				for (User user : usersList) {
+					if (user instanceof Student){
+						//print student details
+					}
+				}
 				System.out.print("Choose id: ");
 				int stuID = Integer.parseInt(in.nextLine());
 
@@ -187,10 +202,14 @@ public class A2_2020172{
 				while(stuMenuSelection != 7) {
 
 					if (stuMenuSelection == 1) {
-						//print lecture materials
+						for (Lectures i : lectureList) {
+							i.viewLectureMaterial();
+						}
 
 					} else if (stuMenuSelection == 2) {
-						//print assessments
+						for (Assessments i : assessmentsList) {
+							i.viewAssesmentMaterial();
+						}
 
 					} else if (stuMenuSelection == 3) {
 						//print pending assessments
@@ -224,7 +243,7 @@ public class A2_2020172{
 						commentsList.add(commentToBeAdded+" - S"+stuID);
 						commentsList.add(date.toString());
 						commentsList.add("");				
-						
+
 					}
 					System.out.println("Welcome S"+stuID);
 					studentMenu();
