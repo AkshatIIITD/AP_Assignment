@@ -2,7 +2,6 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Date;
 
-
 public class A2_2020172{
 
 	public static void mainMenu() {
@@ -91,7 +90,7 @@ public class A2_2020172{
 								String content = in.nextLine();
 								listOfSlideContent.add(content);
 							}
-							lectureList.add(new LectureSlide(slideName, listOfSlideContent, date.toString(), instID));
+							lectureList.add(new LectureSlide(slideName, listOfSlideContent, instID));
 						} else if (lectureMenuOption == 2) {
 							System.out.print("Enter topic of video: ");
 							String topic = in.nextLine();
@@ -99,7 +98,7 @@ public class A2_2020172{
 							String fileName = in.nextLine();
 							if (fileName.length() > 4) {
 								if (fileName.substring(fileName.length()-4).equals(".mp4")) {
-									lectureList.add(new LectureVideo(topic, fileName, date.toString(), instID));
+									lectureList.add(new LectureVideo(topic, fileName, instID));
 								}
 							} else {
 								System.out.println("Wrong Syntax!");
