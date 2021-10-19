@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class A2_2020172{
@@ -48,6 +49,10 @@ public class A2_2020172{
 	
 		
 		Scanner in = new Scanner(System.in);
+		
+		Date date = new Date();
+		ArrayList<String> commentsList = new ArrayList<>();
+
 		int mainMenuSelection = Integer.parseInt(in.nextLine());
 		while (mainMenuSelection != 3) {
 			
@@ -135,7 +140,11 @@ public class A2_2020172{
 						System.out.println("Choose ID from these ungraded submissions");
 						//list ids of students with that assessment as ungraded
 						int ungradedstudentID = Integer.parseInt(in.nextLine());
+						
 
+						System.out.println("Max Marks: ");
+						System.out.print("Marks scored: ");
+						int marksScored = Integer.parseInt(in.nextLine());
 	
 					} else if (instMenuSelection == 6) {
 						System.out.println("List of open assessments");
@@ -146,13 +155,17 @@ public class A2_2020172{
 						//close assessment
 	
 					} else if (instMenuSelection == 7) {
-						//print comments
+						for (int i = 0; i < commentsList.size(); i++) {
+							System.out.println(commentsList.get(i));
+						}
 	
 	
 					} else if (instMenuSelection == 8) {
 						System.out.print("Enter comment: ");
 						String commentToBeAdded = in.nextLine();
-						//add comment
+						commentsList.add(commentToBeAdded+" - I"+instID);
+						commentsList.add(date.toString());
+						commentsList.add("");
 					}
 					System.out.println("Welcome I"+instID);//add id
 					instructorMenu();
@@ -201,13 +214,17 @@ public class A2_2020172{
 						//print ungraded subm
 
 					} else if (stuMenuSelection == 5) {
-						//print comments
+						for (int i = 0; i < commentsList.size(); i++) {
+							System.out.println(commentsList.get(i));
+						}
 
 					} else if (stuMenuSelection == 6) {
 						System.out.print("Enter comment: ");
 						String commentToBeAdded = in.nextLine();
-						//add comment					
-
+						commentsList.add(commentToBeAdded+" - S"+stuID);
+						commentsList.add(date.toString());
+						commentsList.add("");				
+						
 					}
 					System.out.println("Welcome S"+stuID);
 					studentMenu();
@@ -219,6 +236,7 @@ public class A2_2020172{
 			mainMenu();
 			mainMenuSelection = Integer.parseInt(in.nextLine());
 		}
+		System.out.println("------------------------------------------");
 		in.close();
 	}
-}	
+}

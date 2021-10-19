@@ -1,52 +1,72 @@
 public interface Assessments {
-    
-    void createTask();
-    void gradeTask();
+    void gradeTask(int marksScored);
     void closeTask();
-
+    String returnName();
 }
 
 
 class Assignments implements Assessments{
 
-    @Override
-    public void createTask() {
-        // TODO Auto-generated method stub
-        
+    String assignmentName;
+    int maxMarks;
+    int marksScored;
+    boolean gradedStatus;
+    boolean assignmentStatus;
+
+    Assignments(String assignmentName, int maxMarks) {
+        this.assignmentName = assignmentName;
+        this.maxMarks = maxMarks;
+        this.gradedStatus = false;
+        this.assignmentStatus = true;
     }
 
     @Override
-    public void gradeTask() {
-        // TODO Auto-generated method stub
+    public void gradeTask(int marksScored) {
+        this.marksScored = marksScored;
+        gradedStatus = true;
         
     }
 
     @Override
     public void closeTask() {
-        // TODO Auto-generated method stub
+        assignmentStatus = false;
         
+    }
+
+    @Override
+    public String returnName() {
+        return assignmentName;
     }
 
 }
 
-class Quizzes implements Assessments{
+class Quiz implements Assessments{
 
-    @Override
-    public void createTask() {
-        // TODO Auto-generated method stub
-        
+    String quizName;
+    int marksScored;
+    boolean gradedStatus;
+    boolean quizStatus;
+
+    Quiz(String quizName) {
+        this.quizName = quizName;
+        this.gradedStatus = false;
     }
 
     @Override
-    public void gradeTask() {
-        // TODO Auto-generated method stub
+    public void gradeTask(int marksScored) {
+        gradedStatus = true;
+        this.marksScored = marksScored;
         
     }
 
     @Override
     public void closeTask() {
-        // TODO Auto-generated method stub
-        
+        quizStatus = false;
+    }
+
+    @Override
+    public String returnName() {
+        return quizName;
     }
 
 }
