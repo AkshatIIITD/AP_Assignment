@@ -97,8 +97,10 @@ public class A2_2020172{
 							String topic = in.nextLine();
 							System.out.print("Enter filename of video: ");
 							String fileName = in.nextLine();
-							if (fileName.substring(fileName.length()-4).equals(".mp4")) {
-								lectureList.add(new LectureVideo(topic, fileName, date.toString(), instID));
+							if (fileName.length() > 4) {
+								if (fileName.substring(fileName.length()-4).equals(".mp4")) {
+									lectureList.add(new LectureVideo(topic, fileName, date.toString(), instID));
+								}
 							} else {
 								System.out.println("Wrong Syntax!");
 							}
@@ -248,9 +250,11 @@ public class A2_2020172{
 								if (temp.assessmentsOfThisStudent.get(indexOfAssessment).getClass().getSimpleName().equals("Assignment")) {
 									System.out.print("Enter filename of assignment: ");
 									String assessfileName = in.nextLine();
-									if (assessfileName.substring(assessfileName.length()-4).equals(".zip")) {
-										temp.submitAssessment(indexOfAssessment, assessfileName);
-										stuList.set(stuID, temp);
+									if (assessfileName.length() > 4) {
+										if (assessfileName.substring(assessfileName.length()-4).equals(".zip")) {
+											temp.submitAssessment(indexOfAssessment, assessfileName);
+											stuList.set(stuID, temp);
+										}
 									} else {
 										System.out.println("Wrong Syntax!");
 									}
