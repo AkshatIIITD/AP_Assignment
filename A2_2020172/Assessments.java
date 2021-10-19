@@ -5,12 +5,15 @@ public interface Assessments {
     void viewAssesmentMaterial();
     boolean gradedStatusCheck();
     int getIndexOfAssessment();
+    int getMaxMarks();
+    String getAssessmentSol();
 }
 
 
 class Assignment implements Assessments{
 
     String assignmentName;
+    String fileName;
     int maxMarks;
     int marksScored;
     int indexOfAssessment;
@@ -54,18 +57,29 @@ class Assignment implements Assessments{
         return indexOfAssessment;
     }
 
+    @Override
+    public int getMaxMarks() {
+        return maxMarks;
+    }
+
+    @Override
+    public String getAssessmentSol() {
+        return fileName;
+    }
+
 }
 
 class Quiz implements Assessments{
 
     int indexOfAssessment;
-    String quizName;
+    String quizQuestion;
+    String answer;
     int marksScored;
     boolean gradedStatus;
     boolean quizStatus;
 
-    Quiz(String quizName, int indexOfAssessment) {
-        this.quizName = quizName;
+    Quiz(String quizQuestion, int indexOfAssessment) {
+        this.quizQuestion = quizQuestion;
         this.gradedStatus = false;
         this.indexOfAssessment = indexOfAssessment;
     }
@@ -84,7 +98,7 @@ class Quiz implements Assessments{
 
     @Override
     public void viewAssesmentMaterial() {
-        System.out.println("ID: "+indexOfAssessment+" Question: "+quizName);
+        System.out.println("ID: "+indexOfAssessment+" Question: "+quizQuestion);
         System.out.println("----------------");
     }
 
@@ -96,6 +110,16 @@ class Quiz implements Assessments{
     @Override
     public int getIndexOfAssessment() {
         return indexOfAssessment;
+    }
+
+    @Override
+    public int getMaxMarks() {
+        return 1;
+    }
+
+    @Override
+    public String getAssessmentSol() {
+        return answer;
     }
 
 }

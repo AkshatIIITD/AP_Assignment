@@ -49,7 +49,8 @@ public class A2_2020172{
 		Date date = new Date();
 
 		ArrayList<String> commentsList = new ArrayList<String>();
-		ArrayList<User> usersList = new ArrayList<User>();
+		ArrayList<Instructor> instList = new ArrayList<>();
+		ArrayList<Student> stuList = new ArrayList<>();
 		ArrayList<Assessments> assessmentsList = new ArrayList<Assessments>();
 		ArrayList<Lectures> lectureList = new ArrayList<Lectures>(); 
 
@@ -57,14 +58,10 @@ public class A2_2020172{
 		while (mainMenuSelection != 3) {
 			
 			if (mainMenuSelection == 1) {
-
 				System.out.println("Instructors:");
-				for (User user : usersList) {
-					if (user instanceof Instructor){
-						//print inst details
-					}
+				for (int i = 0; i < instList.size(); i++) {
+					System.out.println(i+" - I"+instList.get(i).instID);
 				}
-
 				System.out.print("Choose id: ");
 				int instID = Integer.parseInt(in.nextLine());
 
@@ -116,12 +113,23 @@ public class A2_2020172{
 							System.out.print("Enter max marks: ");
 							int maxMarks = Integer.parseInt(in.nextLine());
 							int indexOfAssessment = assessmentsList.size();
-							assessmentsList.add(new Assignment(problemStatement, maxMarks, indexOfAssessment));
+							
+							Assignment toBeAdded = new Assignment(problemStatement, maxMarks, indexOfAssessment);
+							assessmentsList.add(toBeAdded);
+							for (Student student : stuList) {
+								student.addAssessmentForStudent(toBeAdded);
+							}
+
 						} else if (assessMenuOption == 2) {
 							System.out.print("Enter quiz question: ");
 							String quizQuestion = in.nextLine();
 							int indexOfAssessment = assessmentsList.size();
-							assessmentsList.add(new Quiz(quizQuestion, indexOfAssessment));
+							
+							Quiz toBeAdded = new Quiz(quizQuestion, indexOfAssessment);
+							assessmentsList.add(toBeAdded);
+							for (Student student : stuList) {
+								student.addAssessmentForStudent(toBeAdded);
+							}
 						}
 	
 					} else if (instMenuSelection == 3) {
@@ -139,17 +147,25 @@ public class A2_2020172{
 						for (Assessments i : assessmentsList) {
 							i.viewAssesmentMaterial();
 						}
-						
 						System.out.print("Enter ID of assessment to view submissions: ");
 						int assessmentID = Integer.parseInt(in.nextLine());
-						System.out.println("Choose ID from these ungraded submissions");
-						//list ids of students with that assessment as ungraded
-						int ungradedstudentID = Integer.parseInt(in.nextLine());
 						
-
-						System.out.println("Max Marks: ");
+						System.out.println("Choose ID from these ungraded submissions");
+						for (int i = 0; i < stuList.size(); i++) {
+							if (!stuList.get(i).assessmentsOfThisStudent.get(assessmentID).gradedStatusCheck()) {
+								System.out.println(i+". S"+stuList.get(i).stuID);
+							}
+						}
+						int ungradedstudentID = Integer.parseInt(in.nextLine());
+						Student temp = stuList.get(ungradedstudentID);
+						System.out.println("Submission: "+ temp.assessmentsOfThisStudent.get(assessmentID).getAssessmentSol());
+						System.out.println("------------------------------");
+						
+						System.out.println("Max Marks: "+temp.assessmentsOfThisStudent.get(assessmentID).getMaxMarks());
 						System.out.print("Marks scored: ");
 						int marksScored = Integer.parseInt(in.nextLine());
+						temp.gradeAssessment(assessmentID, marksScored);
+						stuList.set(ungradedstudentID, temp);
 	
 					} else if (instMenuSelection == 6) {
 						System.out.println("List of open assessments");
@@ -159,18 +175,23 @@ public class A2_2020172{
 							}
 						}
 						System.out.print("Enter id of assignment to close: ");
+
 						int assessmentIDtoclose = Integer.parseInt(in.nextLine());
 						for (Assessments assessment : assessmentsList) {
 							if (assessment.getIndexOfAssessment() == assessmentIDtoclose) {
 								assessment.closeTask();
 							}
 						}
+						for (Student stu : stuList) {
+							Assessments temp = stu.assessmentsOfThisStudent.get(assessmentIDtoclose);
+							temp.closeTask();
+							stu.assessmentsOfThisStudent.set(assessmentIDtoclose, temp);
+						}
 	
 					} else if (instMenuSelection == 7) {
 						for (int i = 0; i < commentsList.size(); i++) {
 							System.out.println(commentsList.get(i));
 						}
-	
 	
 					} else if (instMenuSelection == 8) {
 						System.out.print("Enter comment: ");
@@ -187,10 +208,8 @@ public class A2_2020172{
 			} else if (mainMenuSelection == 2) {
 				
 				System.out.println("Students:");
-				for (User user : usersList) {
-					if (user instanceof Student){
-						//print student details
-					}
+				for (int i = 0; i < stuList.size(); i++) {
+					System.out.println(i+" - S"+stuList.get(i).stuID);
 				}
 				System.out.print("Choose id: ");
 				int stuID = Integer.parseInt(in.nextLine());
@@ -212,7 +231,10 @@ public class A2_2020172{
 						}
 
 					} else if (stuMenuSelection == 3) {
+						System.out.println();
 						//print pending assessments
+
+
 						System.out.print("Enter ID of assessment: ");
 						int asssessID = Integer.parseInt(in.nextLine());
 						System.out.print("Enter filename of assignment: ");
