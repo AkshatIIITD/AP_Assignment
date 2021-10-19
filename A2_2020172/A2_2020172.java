@@ -49,11 +49,19 @@ public class A2_2020172{
 		Date date = new Date();
 
 		ArrayList<String> commentsList = new ArrayList<String>();
-		ArrayList<Instructor> instList = new ArrayList<>();
-		ArrayList<Student> stuList = new ArrayList<>();
 		ArrayList<Assessments> assessmentsList = new ArrayList<Assessments>();
 		ArrayList<Lectures> lectureList = new ArrayList<Lectures>(); 
+		
+		ArrayList<Instructor> instList = new ArrayList<>();
+		instList.add(new Instructor(0));
+		instList.add(new Instructor(1));
 
+		ArrayList<Student> stuList = new ArrayList<>();
+		stuList.add(new Student(0, assessmentsList));
+		stuList.add(new Student(1, assessmentsList));
+		stuList.add(new Student(2, assessmentsList));
+		
+		
 		int mainMenuSelection = Integer.parseInt(in.nextLine());
 		while (mainMenuSelection != 3) {
 			
@@ -85,7 +93,7 @@ public class A2_2020172{
 							int noOfSlides = Integer.parseInt(in.nextLine());
 							ArrayList<String> listOfSlideContent = new ArrayList<>();
 							for (int i = 0; i < noOfSlides; i++) {
-								System.out.println("Content of slide "+i);
+								System.out.println("Content of slide "+(i+1)+" : ");
 								String content = in.nextLine();
 								listOfSlideContent.add(content);
 							}
@@ -231,20 +239,37 @@ public class A2_2020172{
 						}
 
 					} else if (stuMenuSelection == 3) {
-						System.out.println();
+						System.out.println("Pending assessments");
 						//print pending assessments
-
+						
 
 						System.out.print("Enter ID of assessment: ");
-						int asssessID = Integer.parseInt(in.nextLine());
-						System.out.print("Enter filename of assignment: ");
-						String assessfileName = in.nextLine();
-						if (assessfileName.substring(assessfileName.length()-4).equals(".zip")) {
-							//add assignment
+						int indexOfAssessment = Integer.parseInt(in.nextLine());
+						if (assessmentsList.get(indexOfAssessment).assignmentStatusCheck()) {
 							
+							if (assessmentsList.get(indexOfAssessment).getClass().getSimpleName().equals("Assignment")) {
+								System.out.print("Enter filename of assignment: ");
+								String assessfileName = in.nextLine();
+								if (assessfileName.substring(assessfileName.length()-4).equals(".zip")) {
+									Student temp = stuList.get(stuID); 
+									temp.submitAssessment(indexOfAssessment, assessfileName);
+									stuList.set(stuID, temp);
+								} else {
+									System.out.println("Wrong Syntax!");
+								}
+							} else {
+								System.out.print(assessmentsList.get(indexOfAssessment).getAssessmentName());
+								String assessfileName = in.nextLine();
+								Student temp = stuList.get(stuID); 
+								temp.submitAssessment(indexOfAssessment, assessfileName);
+								stuList.set(stuID, temp);
+							}
+
 						} else {
-							System.out.println("Wrong Syntax!");
+							System.out.println("Assessment Closed");
 						}
+
+						
 
 					} else if (stuMenuSelection == 4) {
 						System.out.println("Graded Submissions");

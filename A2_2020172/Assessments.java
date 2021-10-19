@@ -4,9 +4,12 @@ public interface Assessments {
     void closeTask();
     void viewAssesmentMaterial();
     boolean gradedStatusCheck();
+    boolean assignmentStatusCheck();
     int getIndexOfAssessment();
     int getMaxMarks();
     String getAssessmentSol();
+    void setAssessmentSol(String submission);
+    String getAssessmentName();
 }
 
 
@@ -67,6 +70,21 @@ class Assignment implements Assessments{
         return fileName;
     }
 
+    @Override
+    public boolean assignmentStatusCheck() {
+        return assignmentStatus;
+    }
+
+    @Override
+    public void setAssessmentSol(String submission) {
+        fileName = submission;
+    }
+
+    @Override
+    public String getAssessmentName() {
+        return assignmentName;
+    }
+
 }
 
 class Quiz implements Assessments{
@@ -77,11 +95,13 @@ class Quiz implements Assessments{
     int marksScored;
     boolean gradedStatus;
     boolean quizStatus;
+    boolean assignmentStatus;
 
     Quiz(String quizQuestion, int indexOfAssessment) {
         this.quizQuestion = quizQuestion;
         this.gradedStatus = false;
         this.indexOfAssessment = indexOfAssessment;
+        this.assignmentStatus = true;
     }
 
     @Override
@@ -120,6 +140,21 @@ class Quiz implements Assessments{
     @Override
     public String getAssessmentSol() {
         return answer;
+    }
+
+    @Override
+    public boolean assignmentStatusCheck() {
+        return assignmentStatus;
+    }
+
+    @Override
+    public void setAssessmentSol(String submission) {
+        answer = submission;
+    }
+
+    @Override
+    public String getAssessmentName() {
+        return quizQuestion;
     }
 
 }

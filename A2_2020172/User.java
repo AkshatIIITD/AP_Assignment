@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public interface User {
+    void submitAssessment(int assessmentID, String submission);
     void addAssessmentForStudent(Assessments assessmentToBeAdded);
     void gradeAssessment(int assessmentID, int marksScored);
 }
@@ -20,6 +21,10 @@ class Instructor implements User {
     @Override
     public void addAssessmentForStudent(Assessments assessmentToBeAdded) {        
     }
+
+    @Override
+    public void submitAssessment(int assessmentID, String submission) {   
+    }
 }
 
 class Student implements User {
@@ -33,12 +38,17 @@ class Student implements User {
     }
 
     @Override
-    public void gradeAssessment(int assessmentID ,int marksScored) {
+    public void gradeAssessment(int assessmentID, int marksScored) {
         assessmentsOfThisStudent.get(assessmentID).gradeTask(marksScored);
     }
 
     @Override
     public void addAssessmentForStudent(Assessments assessmentToBeAdded) {
         assessmentsOfThisStudent.add(assessmentToBeAdded);
+    }
+
+    @Override
+    public void submitAssessment(int assessmentID, String submission) {
+        assessmentsOfThisStudent.get(assessmentID).setAssessmentSol(submission);
     }
 }
