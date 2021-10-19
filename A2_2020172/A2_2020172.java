@@ -57,9 +57,9 @@ public class A2_2020172{
 		instList.add(new Instructor(1));
 
 		ArrayList<Student> stuList = new ArrayList<>();
-		stuList.add(new Student(0));
-		stuList.add(new Student(1));
-		stuList.add(new Student(2));
+		stuList.add(new Student(0, assessmentsList));
+		stuList.add(new Student(1, assessmentsList));
+		stuList.add(new Student(2, assessmentsList));
 
 		int mainMenuSelection = Integer.parseInt(in.nextLine());
 		while (mainMenuSelection != 3) {
@@ -158,17 +158,17 @@ public class A2_2020172{
 						
 						System.out.println("Choose ID from these ungraded submissions");
 						for (int i = 0; i < stuList.size(); i++) {
-							boolean x = stuList.get(i).assessmentsOfThisStudent.get(assessmentID).gradedStatusCheck();
+							boolean x = stuList.get(i).returnListOfAssessments().get(assessmentID).gradedStatusCheck();
 							if (!x) {
 								System.out.println(i+". S"+stuList.get(i).stuID);
 							}
 						}
 						int ungradedstudentID = Integer.parseInt(in.nextLine());
 						Student temp = stuList.get(ungradedstudentID);
-						System.out.println("Submission: "+ temp.assessmentsOfThisStudent.get(assessmentID).getAssessmentSol());
+						System.out.println("Submission: "+ temp.returnListOfAssessments().get(assessmentID).getAssessmentSol());
 						System.out.println("------------------------------");
 						
-						System.out.println("Max Marks: "+temp.assessmentsOfThisStudent.get(assessmentID).getMaxMarks());
+						System.out.println("Max Marks: "+temp.returnListOfAssessments().get(assessmentID).getMaxMarks());
 						System.out.print("Marks scored: ");
 						int marksScored = Integer.parseInt(in.nextLine());
 						temp.gradeAssessment(assessmentID, marksScored, instID);
@@ -190,9 +190,9 @@ public class A2_2020172{
 							}
 						}
 						for (Student stu : stuList) {
-							Assessments temp = stu.assessmentsOfThisStudent.get(assessmentIDtoclose);
+							Assessments temp = stu.returnListOfAssessments().get(assessmentIDtoclose);
 							temp.closeTask();
-							stu.assessmentsOfThisStudent.set(assessmentIDtoclose, temp);
+							stu.returnListOfAssessments().set(assessmentIDtoclose, temp);
 						}
 	
 					} else if (instMenuSelection == 7) {
@@ -246,8 +246,8 @@ public class A2_2020172{
 							System.out.print("Enter ID of assessment: ");
 							int indexOfAssessment = Integer.parseInt(in.nextLine());
 							
-							if (temp.assessmentsOfThisStudent.get(indexOfAssessment).assessmentStatusCheck()) {
-								if (temp.assessmentsOfThisStudent.get(indexOfAssessment).getClass().getSimpleName().equals("Assignment")) {
+							if (temp.returnListOfAssessments().get(indexOfAssessment).assessmentStatusCheck()) {
+								if (temp.returnListOfAssessments().get(indexOfAssessment).getClass().getSimpleName().equals("Assignment")) {
 									System.out.print("Enter filename of assignment: ");
 									String assessfileName = in.nextLine();
 									if (assessfileName.length() > 4) {
@@ -259,7 +259,7 @@ public class A2_2020172{
 										System.out.println("Wrong Syntax!");
 									}
 								} else {
-									System.out.print(assessmentsList.get(indexOfAssessment).getAssessmentName());
+									System.out.print(temp.returnListOfAssessments().get(indexOfAssessment).getAssessmentName());
 									String assessfileName = in.nextLine();
 									temp.submitAssessment(indexOfAssessment, assessfileName);
 									stuList.set(stuID, temp);

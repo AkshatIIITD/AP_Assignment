@@ -7,6 +7,7 @@ public interface User {
     boolean printPendingAssessments();
     void printGradedAssignments();
     void printUngradedAssignments();
+    ArrayList<Assessments> returnListOfAssessments();
 }
 
 class Instructor implements User {
@@ -41,15 +42,21 @@ class Instructor implements User {
     @Override
     public void printUngradedAssignments() {       
     }
+
+    @Override
+    public ArrayList<Assessments> returnListOfAssessments() {
+        return new ArrayList<>();
+    }
 }
 
 class Student implements User {
     
     int stuID;
-    ArrayList<Assessments> assessmentsOfThisStudent = new ArrayList<Assessments>();
+    ArrayList<Assessments> assessmentsOfThisStudent;
     
-    Student(int stuID) {
+    Student(int stuID, ArrayList<Assessments> assessmentsOfThisStudent) {
         this.stuID = stuID;
+        this.assessmentsOfThisStudent = new ArrayList<Assessments>();
     }
 
     @Override
@@ -101,5 +108,10 @@ class Student implements User {
                 System.out.println("Submission: "+assessmentsOfThisStudent.get(i).getAssessmentSol());
             }
         }
+    }
+
+    @Override
+    public ArrayList<Assessments> returnListOfAssessments() {
+        return assessmentsOfThisStudent;
     }
 }
