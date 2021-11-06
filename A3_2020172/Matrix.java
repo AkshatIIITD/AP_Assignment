@@ -9,7 +9,9 @@ class RectangleMatrix extends Matrix {
 public class Matrix {
     int noOfRows;
     int noOfColumns;
-    int matrixUniqueID;
+    String matrixUniqueID;
+    int[][] entries = new int[noOfRows][noOfColumns];
+    int determinant;
     
 
 }
