@@ -2,6 +2,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class A3_2020172 {
+    public static void opMenu() {
+            System.out.println("1. Addition");
+            System.out.println("2. Substraction");
+            System.out.println("3. Multiplication");
+            System.out.println("4. Division");
+    }
+
     public static void menu() {
         System.out.println("Hello, Welcome to the matrix calculator");
         System.out.println("1. Add matrix in list");
@@ -23,8 +30,10 @@ public class A3_2020172 {
     }
 
     public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
         ArrayList<Matrix> listOfMatrices = new ArrayList<>();
-        Scanner in = new Scanner(System.in);    
+        
+            
         menu();
         int optionNo = Integer.parseInt(in.nextLine());
         while (optionNo != 16) {
@@ -37,11 +46,14 @@ public class A3_2020172 {
                 int noOfRows = Integer.parseInt(in.nextLine());
                 System.out.print("Enter no of columns for the matrix: ");
                 int noOfColumns = Integer.parseInt(in.nextLine());
+                
                 for (int i = 0; i < noOfRows; i++) {
                     for (int j = 0; j < noOfColumns; j++) {
                         
                     }
                 }
+                //listOfMatrices.add(e);
+
             } else if (optionNo == 2) {
                 System.out.println("1. Rectangular Matrix");
                 System.out.println("2. Square Matrix");
@@ -58,7 +70,7 @@ public class A3_2020172 {
                 System.out.println("13. Singleton Matrix");
                 System.out.println("14. Ones Matrix");
                 System.out.println("15. Null Matrix ");
-                System.out.print("Input the type of matrix required from the options above: ");
+                System.out.print("Enter the index of the type of matrix required from the options above: ");
                 int martrixOption = Integer.parseInt(in.nextLine());
                 if(martrixOption == 1) {
 
@@ -120,57 +132,119 @@ public class A3_2020172 {
 
 
                 } else {
-                    System.out.println("invalid option number");
+                    System.out.println("invalid index number");
                 }
 
 
             } else if (optionNo == 3) {
-
+                System.out.print("Enter the unique ID of the matrix to be edited: ");
+                String inputUniqueID = in.nextLine();
 
 
 
             } else if (optionNo == 4) {
-
-
+                System.out.print("Enter the unique ID of the matrix to get labels: ");
+                String inputUniqueID = in.nextLine();
 
 
             } else if (optionNo == 5) {
+                opMenu();
+                System.out.print("Enter the index of operation type: ");
+                int martrixOption = Integer.parseInt(in.nextLine());
+                System.out.print("Enter the unique ID of the first matrix: ");
+                String matrixID1 = in.nextLine();
+                System.out.print("Enter the unique ID of the second matrix: ");
+                String matrixID2 = in.nextLine();
+                if(martrixOption == 1) {
 
 
+                } else if (martrixOption == 2) {
+
+
+
+                } else if (martrixOption == 3) {
+
+
+
+                } else if (martrixOption == 4) {
+
+
+
+                } else {
+                    System.out.println("invalid index number");
+                }
 
 
             } else if (optionNo == 6) {
+                opMenu();
+                System.out.print("Enter the index of operation type: ");
+                int martrixOption = Integer.parseInt(in.nextLine());
+                System.out.print("Enter the unique ID of the first matrix: ");
+                String matrixID1 = in.nextLine();
+                System.out.print("Enter the unique ID of the second matrix: ");
+                String matrixID2 = in.nextLine();
+                if(martrixOption == 1) {
 
 
+                } else if (martrixOption == 2) {
+
+
+
+                } else if (martrixOption == 3) {
+
+
+
+                } else if (martrixOption == 4) {
+
+
+
+                } else {
+                    System.out.println("invalid index number");
+                }
 
 
             } else if (optionNo == 7) {
-
-
+                System.out.print("Enter the unique ID of the matrix: ");
+                String inputUniqueID = in.nextLine();
 
 
             } else if (optionNo == 8) {
-
-
+                System.out.print("Enter the unique ID of the matrix: ");
+                String inputUniqueID = in.nextLine();
 
 
             } else if (optionNo == 9) {
+                System.out.println("1. Row-Wise mean");
+                System.out.println("2. Column-Wise mean");
+                System.out.println("3. Mean of all entries");
+                System.out.print("Enter the index of the type of mean required");
+                int martrixMeanOption = Integer.parseInt(in.nextLine());
+                System.out.print("Enter the unique ID of the matrix: ");
+                String inputUniqueID = in.nextLine();
+                if (martrixMeanOption == 1) {
 
+                } else if (martrixMeanOption == 2) {
 
+                } else if (martrixMeanOption == 3) {
+
+                } else {
+                    System.out.println("invalid index number");
+                }
 
 
             } else if (optionNo == 10) {
-
-
+                System.out.print("Enter the unique ID of the square matrix: ");
+                String inputUniqueID = in.nextLine();
 
 
             } else if (optionNo == 11) {
-
+                
 
 
 
             } else if (optionNo == 12) {
-
+                System.out.print("Enter the unique ID of the matrix: ");
+                String inputUniqueID = in.nextLine();
 
 
 
@@ -185,8 +259,8 @@ public class A3_2020172 {
 
 
             } else if (optionNo == 15) {
-
-
+                System.out.print("Enter the label to receive matrices: ");
+                String label = in.nextLine();
 
 
             } else {
