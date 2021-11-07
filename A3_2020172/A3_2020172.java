@@ -2,11 +2,29 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class A3_2020172 {
-    public static void opMenu() {
-            System.out.println("1. Addition");
-            System.out.println("2. Substraction");
-            System.out.println("3. Multiplication");
-            System.out.println("4. Division");
+    public static void operationsMenu() {
+        System.out.println("1. Addition");
+        System.out.println("2. Substraction");
+        System.out.println("3. Multiplication");
+        System.out.println("4. Division");
+    }
+
+    public static void matrixTypeMenu() {
+        System.out.println("1. Rectangular Matrix");
+        System.out.println("2. Square Matrix");
+        System.out.println("3. Row Matrix");
+        System.out.println("4. Column Matrix");
+        System.out.println("5. Symmetric Matrix");
+        System.out.println("6. Skew-symmetric Matrix");
+        System.out.println("7. Upper-triangular Matrix");
+        System.out.println("8. Lower-triangular Matrix");
+        System.out.println("9. Singular Matrix");
+        System.out.println("10. Diagonal Matrix");
+        System.out.println("11. Scalar Matrix");
+        System.out.println("12. Identity Matrix");
+        System.out.println("13. Singleton Matrix");
+        System.out.println("14. Ones Matrix");
+        System.out.println("15. Null Matrix ");        
     }
 
     public static void menu() {
@@ -55,21 +73,7 @@ public class A3_2020172 {
                 //listOfMatrices.add(e);
 
             } else if (optionNo == 2) {
-                System.out.println("1. Rectangular Matrix");
-                System.out.println("2. Square Matrix");
-                System.out.println("3. Row Matrix");
-                System.out.println("4. Column Matrix");
-                System.out.println("5. Symmetric Matrix");
-                System.out.println("6. Skew-symmetric Matrix");
-                System.out.println("7. Upper-triangular Matrix");
-                System.out.println("8. Lower-triangular Matrix");
-                System.out.println("9. Singular Matrix");
-                System.out.println("10. Diagonal Matrix");
-                System.out.println("11. Scalar Matrix");
-                System.out.println("12. Identity Matrix");
-                System.out.println("13. Singleton Matrix");
-                System.out.println("14. Ones Matrix");
-                System.out.println("15. Null Matrix ");
+                matrixTypeMenu();
                 System.out.print("Enter the index of the type of matrix required from the options above: ");
                 int martrixOption = Integer.parseInt(in.nextLine());
                 if(martrixOption == 1) {
@@ -148,7 +152,7 @@ public class A3_2020172 {
 
 
             } else if (optionNo == 5) {
-                opMenu();
+                operationsMenu();
                 System.out.print("Enter the index of operation type: ");
                 int martrixOption = Integer.parseInt(in.nextLine());
                 System.out.print("Enter the unique ID of the first matrix: ");
@@ -176,7 +180,7 @@ public class A3_2020172 {
 
 
             } else if (optionNo == 6) {
-                opMenu();
+                operationsMenu(); 
                 System.out.print("Enter the index of operation type: ");
                 int martrixOption = Integer.parseInt(in.nextLine());
                 System.out.print("Enter the unique ID of the first matrix: ");
