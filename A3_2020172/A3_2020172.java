@@ -43,7 +43,7 @@ public class A3_2020172 {
         System.out.println("12. Compute the sum of a matrix and its transpose");
         System.out.println("13. Compute the eigen vectors and values of a matrix (2x2 only)");
         System.out.println("14. Solve linear equations");
-        System.out.println("15. Receive list of ");
+        System.out.println("15. Receive list of the unique IDs of matrices with the given label");
         System.out.println("16. Exit");
     }
 
