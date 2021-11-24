@@ -43,6 +43,8 @@ public class App {
     public static Comparator<Book> compareISBN = (Book b1, Book b2) -> Integer.toString(b1.getBookISBN()).compareTo(Integer.toString(b2.getBookISBN()));
     public static Comparator<Book> compareBarCode = (Book b1, Book b2) -> Integer.toString(b1.getBookBarCode()).compareTo(Integer.toString(b2.getBookBarCode()));
     
+    
+
     public static void sortBooks(ArrayList<Book> bookList) {
         Collections.sort(bookList, compareNames);
         for (int i = 0; i < bookList.size(); i++) {
@@ -53,14 +55,24 @@ public class App {
             if (j > i) {
                 Collections.sort(bookList.subList(i, j), compareISBN);
             }
-            int k = i;
-            while(k < bookList.size() && (Integer.toString(bookList.get(k).getBookISBN()).equals(Integer.toString(bookList.get(k+1).getBookISBN())))) {
-                k++;
+            int k1 = i;
+            int k2 = i;
+            while(k1 < bookList.size() && k2 < bookList.size()) {
+                if (Integer.toString(bookList.get(k2).getBookISBN()).equals(Integer.toString(bookList.get(k2+1).getBookISBN()))) {
+                    k2++;
+                } else {
+                    if (k2 == k1) {
+                        k1++;
+                        k2++;
+                    } else {
+                        break;
+                    }
+                }
             }
-            if (k>i) {
-                Collections.sort(bookList.subList(i, j), compareBarCode);
+            if (k2 > k1) {
+                Collections.sort(bookList.subList(k1, k2), compareBarCode);
             }
-            i = j;
+            i = k2;
         }
     }
     public static void main(String[] args) {
