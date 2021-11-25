@@ -49,28 +49,36 @@ public class App {
         Collections.sort(bookList, compareNames);
         for (int i = 0; i < bookList.size(); i++) {
             int j = i;
-            while (j < bookList.size() && (bookList.get(j).getBookName().equals(bookList.get(j+1).getBookName()))) {
-                j++;
+            while (j < bookList.size()) {
+                if (j != bookList.size() - 1  && (bookList.get(j).getBookName().equals(bookList.get(j+1).getBookName()))) {
+                    j++;
+                } else {
+                    break;
+                }
             }
             if (j > i) {
-                Collections.sort(bookList.subList(i, j), compareISBN);
+                Collections.sort(bookList.subList(i, j+1), compareISBN);
             }
             int k1 = i;
             int k2 = i;
             while(k1 < bookList.size() && k2 < bookList.size()) {
-                if (Integer.toString(bookList.get(k2).getBookISBN()).equals(Integer.toString(bookList.get(k2+1).getBookISBN()))) {
-                    k2++;
-                } else {
-                    if (k2 == k1) {
-                        k1++;
+                if((k1 != (bookList.size() - 1)) && (k2 != (bookList.size() - 1))) {
+                    if (Integer.toString(bookList.get(k2).getBookISBN()).equals(Integer.toString(bookList.get(k2+1).getBookISBN()))) {
                         k2++;
                     } else {
-                        break;
+                        if (k2 == k1) {
+                            k1++;
+                            k2++;
+                        } else {
+                            break;
+                        }
                     }
+                } else {
+                    break;
                 }
             }
             if (k2 > k1) {
-                Collections.sort(bookList.subList(k1, k2), compareBarCode);
+                Collections.sort(bookList.subList(k1, k2+1), compareBarCode);
             }
             i = k2;
         }
@@ -104,9 +112,20 @@ public class App {
         while (i < k) {
             Rack temp = new Rack(n/k);
             temp.bookContained = bookList.subList((n/k)*i, (n/k)*(i+1));
-            racks.set(i, temp);
+            racks.add(temp);
             i++;
         }
         in.close();
+        for (int j = 0; j < racks.size(); j++) {
+            for (int j2 = 0; j2 < racks.get(j).bookContained.size(); j2++) {
+                Book temp = racks.get(j).bookContained.get(j2);
+                System.out.println(
+                    "RackNO: "+(j+1)+
+                    ", Book name: "+temp.getBookName()+
+                    ", Book ISBN: "+temp.getBookISBN()+
+                    ", Book BarCode: "+temp.getBookBarCode()
+                );
+            }
+        }
     }
 }
