@@ -15,37 +15,58 @@ final class Book {
         barCode = assignedBarCode;
     }
 
-    String getBookName() {
+    public String getBookName() {
         return bookName;
     }
 
-    int getBookISBN() {
+    public int getBookISBN() {
         return ISBN;
     }
 
-    int getBookBarCode() {
+    public int getBookBarCode() {
         return barCode;
     }
 }
 
-class Rack {
-    final int rackNo;
-    final int noOfbooks;
-    List<Book> bookContained;
+final class Rack {
+    private final int rackNo;
+    private final int noOfbooks;
+    private final List<Book> bookContained;
 
-    Rack(int noOfbooks, int rackNo) {
+    Rack(int noOfbooks, int rackNo, List<Book> bookContained) {
         this.noOfbooks = noOfbooks;
         this.rackNo = rackNo;
+        this.bookContained = bookContained;
+    }
+
+    public List<Book> getBookContained() {
+        return bookContained;
+    }
+
+    public int getNoOfbooks() {
+        return noOfbooks;
+    }
+
+    public int getRackNo() {
+        return rackNo;
     }
 }
 
 public class App {
-
+    //comparators used
     public static Comparator<Book> compareNames = (Book b1, Book b2) -> b1.getBookName().compareTo(b2.getBookName());
     public static Comparator<Book> compareISBN = (Book b1, Book b2) -> Integer.toString(b1.getBookISBN()).compareTo(Integer.toString(b2.getBookISBN()));
     public static Comparator<Book> compareBarCode = (Book b1, Book b2) -> Integer.toString(b1.getBookBarCode()).compareTo(Integer.toString(b2.getBookBarCode()));
-    
-    
+
+    public static void addBooksToRacks(int n, int k, ArrayList<Book> bookList, ArrayList<Rack> racks) {
+        int i = 0;
+        while (i < k) {
+            List<Book> booksForRack = bookList.subList((n/k)*i, (n/k)*(i+1));
+            Rack temp = new Rack(n/k, i+1, booksForRack);
+            racks.add(temp);
+            i++;
+        }
+    }
 
     public static void sortBooks(ArrayList<Book> bookList) {
         Collections.sort(bookList, compareNames);
@@ -65,7 +86,7 @@ public class App {
             int k2 = i;
             while(k1 < bookList.size() && k2 < bookList.size()) {
                 if((k1 != (bookList.size() - 1)) && (k2 != (bookList.size() - 1))) {
-                    if (Integer.toString(bookList.get(k2).getBookISBN()).equals(Integer.toString(bookList.get(k2+1).getBookISBN()))) {
+                    if (bookList.get(k2).getBookISBN() == bookList.get(k2+1).getBookISBN()) {
                         k2++;
                     } else {
                         if (k2 == k1) {
@@ -87,15 +108,16 @@ public class App {
     }
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-
+        //n and k
         System.out.print("Enter the number of books: ");
         int n = Integer.parseInt(in.nextLine());
         System.out.print("Enter the number of racks: ");
         int k = Integer.parseInt(in.nextLine());
-
-        ArrayList<Rack> racks = new ArrayList<>(k);
-        ArrayList<Book> bookList = new ArrayList<>(n);
+        //lists used
+        ArrayList<Rack> racks = new ArrayList<>();
+        ArrayList<Book> bookList = new ArrayList<>();
         ArrayList<Integer> barCodeList = new ArrayList<>();
+
         for (int i = 0; i < n; i++) {
             System.out.print("Enter the name of book number "+(i+1)+": ");
             String assignedBookName = in.nextLine();
@@ -109,25 +131,59 @@ public class App {
                 bookList.add(new Book(assignedBookName, assignedISBN, assignedBarCode));
             }
         }
-        sortBooks(bookList);
-        int i = 0;
-        while (i < k) {
-            Rack temp = new Rack(n/k, i+1);
-            temp.bookContained = bookList.subList((n/k)*i, (n/k)*(i+1));
-            racks.add(temp);
-            i++;
-        }
-        in.close();
+        
+        sortBooks(bookList); //sorting
+        addBooksToRacks(n, k, bookList, racks); //separating booklist
+        //printing all books' details
         for (int j = 0; j < racks.size(); j++) {
-            for (int j2 = 0; j2 < racks.get(j).bookContained.size(); j2++) {
-                Book temp = racks.get(j).bookContained.get(j2);
+            for (int j2 = 0; j2 < (n/k); j2++) {
+                Book temp = racks.get(j).getBookContained().get(j2);
                 System.out.println(
-                    "RackNO: "+racks.get(j).rackNo+
+                    "Rack Number: "+racks.get(j).getRackNo()+
+                    ", Shelf Number: "+(j2+1)+
                     ", Book name: "+temp.getBookName()+
                     ", Book ISBN: "+temp.getBookISBN()+
                     ", Book BarCode: "+temp.getBookBarCode()
                 );
             }
         }
+        //finder
+        System.out.print("Enter number of books to find: ");
+        int noOfBooksToFind = Integer.parseInt(in.nextLine());
+        while(noOfBooksToFind > 0) {
+            System.out.print("Enter name of the book to find: ");
+            String tempName = in.nextLine();
+            System.out.print("Enter ISBN of the book to find: ");
+            int tempISBN = Integer.parseInt(in.nextLine());
+            System.out.print("Enter BarCode of the book to find: ");
+            int tempBarCode = Integer.parseInt(in.nextLine());
+            int i = 0;
+            boolean flag = false;
+            while (i < racks.size() && (!flag)) {
+                for (int j = 0; j < (n/k); j++) {
+                    List<Book> tempBooks = racks.get(i).getBookContained();
+                    if (tempBooks.get(j).getBookName().equals(tempName) && 
+                        tempBooks.get(j).getBookISBN() == tempISBN &&
+                        tempBooks.get(j).getBookBarCode() == tempBarCode) {
+                        
+                        System.out.println(
+                            "Rack Number: "+racks.get(j).getRackNo()+
+                            ", Shelf Number: "+(j+1)
+                        );
+                        flag = true;
+                        break;
+                    }
+                }
+                if (flag) {
+                    break;
+                }
+                i++;
+                if (i == k && (!flag)) {
+                    System.out.println("Not found!!");
+                }
+            }
+            noOfBooksToFind--;
+        }
+        in.close();
     }
 }
