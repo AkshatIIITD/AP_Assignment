@@ -29,11 +29,13 @@ final class Book {
 }
 
 class Rack {
+    final int rackNo;
     final int noOfbooks;
     List<Book> bookContained;
 
-    Rack(int noOfbooks) {
+    Rack(int noOfbooks, int rackNo) {
         this.noOfbooks = noOfbooks;
+        this.rackNo = rackNo;
     }
 }
 
@@ -110,7 +112,7 @@ public class App {
         sortBooks(bookList);
         int i = 0;
         while (i < k) {
-            Rack temp = new Rack(n/k);
+            Rack temp = new Rack(n/k, i+1);
             temp.bookContained = bookList.subList((n/k)*i, (n/k)*(i+1));
             racks.add(temp);
             i++;
@@ -120,7 +122,7 @@ public class App {
             for (int j2 = 0; j2 < racks.get(j).bookContained.size(); j2++) {
                 Book temp = racks.get(j).bookContained.get(j2);
                 System.out.println(
-                    "RackNO: "+(j+1)+
+                    "RackNO: "+racks.get(j).rackNo+
                     ", Book name: "+temp.getBookName()+
                     ", Book ISBN: "+temp.getBookISBN()+
                     ", Book BarCode: "+temp.getBookBarCode()
