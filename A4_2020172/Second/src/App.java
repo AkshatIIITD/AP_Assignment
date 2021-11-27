@@ -104,6 +104,7 @@ class Functions <T> {
             }
             ((GreyscalePixelSet) newPixelSet).setGreyMatrix(matrix);
         }
+        in.nextLine();
         return newPixelSet;
     }
 
