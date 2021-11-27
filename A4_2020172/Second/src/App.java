@@ -118,7 +118,7 @@ class Functions <T> {
             int rgb = Integer.parseInt(in.nextLine());
             System.out.print("Enter the new value: ");
             int value = Integer.parseInt(in.nextLine());
-            matrix[rowNo][columnNo][rgb] = value;
+            matrix[rowNo][columnNo][rgb-1] = value;
             ((ColorfulPixelSet) newPixelSet).setColorMatrix(matrix);
         } else {
             int [][] matrix = ((GreyscalePixelSet) newPixelSet).getGreyMatrix();
