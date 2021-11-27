@@ -58,7 +58,6 @@ class Functions <T> {
                 }
             }
             ((ColorfulPixelSet) newPixelSet).setColorMatrix(matrix);
-
         } else {
             System.out.print("Enter the number of rows of the matrix: ");
             int m = Integer.parseInt(in.nextLine());
@@ -94,7 +93,6 @@ class Functions <T> {
                 }
             }
             ((ColorfulPixelSet) newPixelSet).setColorMatrix(matrix);
-
         } else {
             System.out.print("Enter the number of rows of the matrix: ");
             int m = Integer.parseInt(in.nextLine());
@@ -115,7 +113,6 @@ class Functions <T> {
 
     public void update(T newPixelSet) {
         Scanner in = new Scanner(System.in);
-
         if (newPixelSet instanceof ColorfulPixelSet) {
             int [][][] matrix = ((ColorfulPixelSet) newPixelSet).getColorMatrix();
             System.out.print("Enter the number of row with number to be updated: ");
@@ -128,7 +125,6 @@ class Functions <T> {
             int value = Integer.parseInt(in.nextLine());
             matrix[rowNo][columnNo][rgb] = value;
             ((ColorfulPixelSet) newPixelSet).setColorMatrix(matrix);
-
         } else {
             int [][] matrix = ((GreyscalePixelSet) newPixelSet).getGreyMatrix();
             System.out.print("Enter the number of row with number to be updated: ");
@@ -142,7 +138,6 @@ class Functions <T> {
         }
         in.close();
     }
-
     
     public void printer(T newPixelSet) {
         if (newPixelSet instanceof ColorfulPixelSet) {
@@ -159,7 +154,6 @@ class Functions <T> {
                 }
                 System.out.println();
             }
-
         } else {
             int m = ((GreyscalePixelSet) newPixelSet).getRows();
             int n = ((GreyscalePixelSet) newPixelSet).getColumns();
@@ -188,7 +182,6 @@ class Functions <T> {
                 }
                 System.out.println();
             }
-
         } else {
             int m = ((GreyscalePixelSet) newPixelSet).getRows();
             int n = ((GreyscalePixelSet) newPixelSet).getColumns();
@@ -204,60 +197,61 @@ class Functions <T> {
 }
 
 public class App <T>{
+
+    public static void menu() {
+        System.out.println("------------------------------");
+        System.out.println("-------------MENU-------------");
+        System.out.println("1. Print pixel matrix");
+        System.out.println("2. Print negative pixel matrix");
+        System.out.println("3. Update the matrix");
+        System.out.println("4. Exit");
+        System.out.println("-------------------------------");
+    }
     public static <T> void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        
         System.out.println("Enter the type of image: ");
         System.out.println("1. Colorful");
         System.out.println("2. Greyscale");
         int type = Integer.parseInt(in.nextLine());
-
         System.out.println("Enter the type of matrix: ");
-        System.out.println("1. Default (all values 1)");
-        System.out.println("2. Custom (all values are supposed to be input)");
+        System.out.println("1. Default (all values 1) type 1");
+        System.out.println("2. Custom (all values are supposed to be input) type any number other than 1");
         int matType = Integer.parseInt(in.nextLine());
-
+        T newPixelSet = (T) new ColorfulPixelSet();
+        Functions<T> func = new Functions<>();
         if (type == 1) {
-            Functions<ColorfulPixelSet> func = new Functions<>();
             if (matType == 1) {
-                ColorfulPixelSet newPixelSet = func.createMatrix(new ColorfulPixelSet());
-                func.printer(newPixelSet);
-                System.out.print("Update ?(y/n): ");
-                String updateReq = in.nextLine();
-                if (updateReq.equals("y")) {
-                    func.update(newPixelSet);
-                    func.printer(newPixelSet);
-                }
+                newPixelSet = func.createMatrix((T) new ColorfulPixelSet());
             } else if (matType == 2) {
-                ColorfulPixelSet newPixelSet = func.inputMatrix(new ColorfulPixelSet());
-                func.printer(newPixelSet);
-                System.out.print("Update ?(y/n): ");
-                String updateReq = in.nextLine();
-                if (updateReq.equals("y")) {
-                    func.update(newPixelSet);
-                    func.printer(newPixelSet);
-                }
+                newPixelSet = func.inputMatrix((T) new ColorfulPixelSet());
             } else {
                 System.out.println("Wrong input!");
             }
-        
-        } else if (type == 2) {
-            Functions<GreyscalePixelSet> func = new Functions<>();
-            if (matType == 1) {
-                GreyscalePixelSet newPixelSet = func.createMatrix(new GreyscalePixelSet());
-                func.printer(newPixelSet);
-
-            } else if (matType == 2) {
-                GreyscalePixelSet newPixelSet = func.inputMatrix(new GreyscalePixelSet());
-                func.printer(newPixelSet);    
-
-            } else {
-                System.out.println("Wrong input!");
-            }
-
         } else {
-            System.out.println("Wrong input!");
-        }       
+            if (matType == 1) {
+                newPixelSet = func.createMatrix((T) new GreyscalePixelSet());
+            } else if (matType == 2) {
+                newPixelSet = func.inputMatrix((T) new GreyscalePixelSet());
+            } else {
+                System.out.println("Wrong input!");
+            }
+        }
+        menu();
+        int option = Integer.parseInt(in.nextLine());
+        while (option != 4) {
+            
+            if (option == 1) {
+                func.printer(newPixelSet);              
+            } else if (option == 2) {
+                func.printNegative(newPixelSet);
+            } else if (option == 3) {
+                func.update(newPixelSet);
+            } else {
+                System.out.println("Wrong input!");
+            }
+            menu();
+            option = Integer.parseInt(in.nextLine());
+        }   
         in.close();        
     }
 }
