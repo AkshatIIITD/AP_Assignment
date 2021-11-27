@@ -71,7 +71,6 @@ class Functions <T> {
             }
             ((GreyscalePixelSet) newPixelSet).setGreyMatrix(matrix);
         }
-        in.close();        
         return newPixelSet;
     }
 
@@ -107,7 +106,6 @@ class Functions <T> {
             }
             ((GreyscalePixelSet) newPixelSet).setGreyMatrix(matrix);
         }
-        in.close();
         return newPixelSet;
     }
 
@@ -136,7 +134,6 @@ class Functions <T> {
             matrix[rowNo][columnNo] = value;
             ((GreyscalePixelSet) newPixelSet).setGreyMatrix(matrix);
         }
-        in.close();
     }
     
     public void printer(T newPixelSet) {
@@ -146,7 +143,7 @@ class Functions <T> {
             int [][][] matrix = ((ColorfulPixelSet) newPixelSet).getColorMatrix();
             for (int i = 0; i < m; i++) {
                 for (int j = 0; j < n; j++) {
-                    System.out.println(
+                    System.out.print(
                         "[R: "+matrix[i][j][0]+
                         ", G: "+matrix[i][j][1]+
                         ", B: "+matrix[i][j][2]+"] "
@@ -160,7 +157,7 @@ class Functions <T> {
             int [][] matrix = ((GreyscalePixelSet) newPixelSet).getGreyMatrix();
             for (int i = 0; i < m; i++) {
                 for (int j = 0; j < n; j++) {
-                    System.out.println(matrix[i][j]+" ");
+                    System.out.print(matrix[i][j]+" ");
                 }
                 System.out.println();
             }
@@ -174,7 +171,7 @@ class Functions <T> {
             int [][][] matrix = ((ColorfulPixelSet) newPixelSet).getColorMatrix();
             for (int i = 0; i < m; i++) {
                 for (int j = 0; j < n; j++) {
-                    System.out.println(
+                    System.out.print(
                         "[R: "+(255-matrix[i][j][0])+
                         ", G: "+(255-matrix[i][j][1])+
                         ", B: "+(255-matrix[i][j][2])+"] "
@@ -188,7 +185,7 @@ class Functions <T> {
             int [][] matrix = ((GreyscalePixelSet) newPixelSet).getGreyMatrix();
             for (int i = 0; i < m; i++) {
                 for (int j = 0; j < n; j++) {
-                    System.out.println((255-matrix[i][j])+" ");
+                    System.out.print((255-matrix[i][j])+" ");
                 }
                 System.out.println();
             }
@@ -215,7 +212,7 @@ public class App <T>{
         int type = Integer.parseInt(in.nextLine());
         System.out.println("Enter the type of matrix: ");
         System.out.println("1. Default (all values 1) type 1");
-        System.out.println("2. Custom (all values are supposed to be input) type any number other than 1");
+        System.out.println("2. Custom (all values are supposed to be input) (type any number other than 1)");
         int matType = Integer.parseInt(in.nextLine());
         T newPixelSet = (T) new ColorfulPixelSet();
         Functions<T> func = new Functions<>();
@@ -239,7 +236,6 @@ public class App <T>{
         menu();
         int option = Integer.parseInt(in.nextLine());
         while (option != 4) {
-            
             if (option == 1) {
                 func.printer(newPixelSet);              
             } else if (option == 2) {
