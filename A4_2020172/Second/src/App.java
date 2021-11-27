@@ -43,8 +43,7 @@ class GreyscalePixelSet {
 
 class Functions <T> {
 
-    public T createMatrix(T newPixelSet) {
-        Scanner in = new Scanner(System.in);
+    public T createMatrix(T newPixelSet, Scanner in) {
         if (newPixelSet instanceof ColorfulPixelSet) {
             System.out.print("Enter the number of rows of the matrix: ");
             int m = Integer.parseInt(in.nextLine());
@@ -74,8 +73,7 @@ class Functions <T> {
         return newPixelSet;
     }
 
-    public T inputMatrix (T newPixelSet) {
-        Scanner in = new Scanner(System.in);
+    public T inputMatrix (T newPixelSet, Scanner in) {
         if (newPixelSet instanceof ColorfulPixelSet) {
             System.out.print("Enter the number of rows of the matrix: ");
             int m = Integer.parseInt(in.nextLine());
@@ -109,8 +107,7 @@ class Functions <T> {
         return newPixelSet;
     }
 
-    public void update(T newPixelSet) {
-        Scanner in = new Scanner(System.in);
+    public void update(T newPixelSet, Scanner in) {
         if (newPixelSet instanceof ColorfulPixelSet) {
             int [][][] matrix = ((ColorfulPixelSet) newPixelSet).getColorMatrix();
             System.out.print("Enter the number of row with number to be updated: ");
@@ -218,17 +215,17 @@ public class App <T>{
         Functions<T> func = new Functions<>();
         if (type == 1) {
             if (matType == 1) {
-                newPixelSet = func.createMatrix((T) new ColorfulPixelSet());
+                newPixelSet = func.createMatrix((T) new ColorfulPixelSet(), in);
             } else if (matType == 2) {
-                newPixelSet = func.inputMatrix((T) new ColorfulPixelSet());
+                newPixelSet = func.inputMatrix((T) new ColorfulPixelSet(), in);
             } else {
                 System.out.println("Wrong input!");
             }
         } else {
             if (matType == 1) {
-                newPixelSet = func.createMatrix((T) new GreyscalePixelSet());
+                newPixelSet = func.createMatrix((T) new GreyscalePixelSet(), in);
             } else if (matType == 2) {
-                newPixelSet = func.inputMatrix((T) new GreyscalePixelSet());
+                newPixelSet = func.inputMatrix((T) new GreyscalePixelSet(), in);
             } else {
                 System.out.println("Wrong input!");
             }
@@ -241,7 +238,7 @@ public class App <T>{
             } else if (option == 2) {
                 func.printNegative(newPixelSet);
             } else if (option == 3) {
-                func.update(newPixelSet);
+                func.update(newPixelSet, in);
             } else {
                 System.out.println("Wrong input!");
             }
