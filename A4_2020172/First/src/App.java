@@ -167,7 +167,7 @@ public class App {
                         tempBooks.get(j).getBookBarCode() == tempBarCode) {
                         
                         System.out.println(
-                            "Rack Number: "+racks.get(j).getRackNo()+
+                            "Rack Number: "+racks.get(i).getRackNo()+
                             ", Shelf Number: "+(j+1)
                         );
                         flag = true;
